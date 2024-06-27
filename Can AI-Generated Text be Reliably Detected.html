@@ -1,0 +1,222 @@
+<html>
+<head>
+	
+	<title>Can AI-Generated Text be Reliably Detected?</title>
+	<meta name="keywords" content="fzb.me,冯宗宝,冯宗宝的blog" />
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    
+	   <link href="/blog/css/main.css?v=3" rel="stylesheet" type="text/css" />
+    
+        
+<script src="/blog/js/util.js"></script>
+
+        <script>
+            if(isMobile()) {
+                loadjscssfile('../css/mobile.css', 'css');
+            } else {
+                loadjscssfile('../css/desktop.css', 'css');
+            }
+        </script> 
+    
+
+    <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Atom feed">
+
+    
+	<link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=3"/>
+    
+    
+
+<meta name="generator" content="Hexo 6.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+<body>
+
+
+<h2 class="title">Can AI-Generated Text be Reliably Detected?</h2>
+<!--
+<div style="text-align:center;margin-top: -10px;">
+<div class="article-category">
+发表于2023年8月25日
+
+
+
+
+ </div>
+-->
+</div>
+
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Can-AI-Generated-Text-be-Reliably-Detected"><span class="toc-text">Can AI-Generated Text be Reliably Detected?</span></a></li></ol>
+<h1 id="Can-AI-Generated-Text-be-Reliably-Detected"><a href="#Can-AI-Generated-Text-be-Reliably-Detected" class="headerlink" title="Can AI-Generated Text be Reliably Detected?"></a>Can AI-Generated Text be Reliably Detected?</h1><p>作者在文中提出的观点是人类和AI生成文本序列分布之间的TV距离（total variation distance）在逐渐减小。</p>
+<p><img src="https://p.ipic.vip/jap5tg.png" alt="image-20230824142150831" style="zoom:50%;"></p>
+<p>AUROC(D)（检测器D的AUROC面积）和TV(M,H)间的关系为：</p>
+<p><img src="https://p.ipic.vip/a0rrua.png" alt="image-20230824143238322" style="zoom:50%;"></p>
+<p>也就是说，随着TV(M,H)逐渐减小至0，即在模型语言越来越接近自然语言时，AUROC(D)趋近于1/2，也就是接近随便猜的水平了。</p>
+<p>比如，在大多数实际场景中，如果探测器能够达到高TPR（例如90%）的同时保持低FPR（例如1%），则被认为是好的。当两个分布重叠超过11％时（即TV距离小于0.89），这是不可能实现的。</p>
+<p>作者强调说并没有对H的分布做任何假设，转换思路的话这个结果还可以用于模仿特定写作风格上。</p>
+<p>对于用了伪随机数生成器的模型，虽然这种模型的TV接近1，但也可以证得：</p>
+<p><img src="https://p.ipic.vip/oibbrq.png" alt="image-20230824155545779" style="zoom:50%;"></p>
+<p>==不对啊，<mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="0.919ex" height="1ex" role="img" focusable="false" viewBox="0 -431 406 442"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D716" d="M227 -11Q149 -11 95 41T40 174Q40 262 87 322Q121 367 173 396T287 430Q289 431 329 431H367Q382 426 382 411Q382 385 341 385H325H312Q191 385 154 277L150 265H327Q340 256 340 246Q340 228 320 219H138V217Q128 187 128 143Q128 77 160 52T231 26Q258 26 284 36T326 57T343 68Q350 68 354 58T358 39Q358 36 357 35Q354 31 337 21T289 0T227 -11Z"></path></g></g></g></svg></mjx-container>是正数，这不是提高了AUROC上限吗。==</p>
+<p>不可能性结果也可以用来表明，即使嵌入了水印，由AI生成的文本通过改写工具进行简单改写也很难被检测到。对于由语言模型生成的序列s，我们将M和H分别设置为由释义器和人类产生的与s有类似意思的句子分布。释义器的目标是使其输出分布与人类生成的句子的分布相似，并且在TV距离方面接近于该分布。上述结果对重新构造后AI文本检测器性能施加了限制。</p>
+<p>这项分析的目的是警告不要过于依赖声称可以识别AI生成文本的检测器。在实际部署之前，应该独立而严格地评估可靠性，最好是针对旨在规避检测的语言模型。</p>
+<p>在第二章，作者讲述了如何用一个改写工具让所有水印方法破功。</p>
+<p>第三章中的主要问题：</p>
+<p><img src="https://p.ipic.vip/hbc10b.png" alt="image-20230825191533007"></p>
+<p>不是很清楚这个公式是怎么来的，如果是TV距离的定义式的话，TPR和FPR为什么能够代表M和H的分布？首先的一个问题就是TV距离要求的式中出现的两个分布必须在同一定义域内，但TPR=TP/(TP+FN)，定义域为机器生成的句子；FPR=FP/(TN+FP)，定义域为人生成的句子，定义域就不同。</p>
+
+
+<!--<a href="https://asparticguan.github.io/blog/Can%20AI-Generated%20Text%20be%20Reliably%20Detected.html#disqus_thread" class="article-comment-link">Comments</a>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = ''; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+-->
+<div style="display:none">
+<script src="http://s4.cnzz.com/stat.php?id=&web_id=" language="JavaScript"></script>script>
+</div>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+</body>
+</html>

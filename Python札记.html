@@ -1,0 +1,525 @@
+<html>
+<head>
+	
+	<title>Python札记</title>
+	<meta name="keywords" content="fzb.me,冯宗宝,冯宗宝的blog" />
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    
+	   <link href="/blog/css/main.css?v=3" rel="stylesheet" type="text/css" />
+    
+        
+<script src="/blog/js/util.js"></script>
+
+        <script>
+            if(isMobile()) {
+                loadjscssfile('../css/mobile.css', 'css');
+            } else {
+                loadjscssfile('../css/desktop.css', 'css');
+            }
+        </script> 
+    
+
+    <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Atom feed">
+
+    
+	<link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=3"/>
+    
+    
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+
+<h2 class="title">Python札记</h2>
+<!--
+<div style="text-align:center;margin-top: -10px;">
+<div class="article-category">
+发表于2023年6月4日
+
+
+
+
+ </div>
+-->
+</div>
+
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B0%9D%E8%AF%95%E5%86%99%E4%B8%80%E7%82%B9%E5%85%B3%E4%BA%8Epython%E7%9A%84%E7%AC%94%E8%AE%B0"><span class="toc-text">尝试写一点关于python的笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#0-Hello-World"><span class="toc-text">0.Hello World!</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Strings"><span class="toc-text">1.Strings</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA"><span class="toc-text">输出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86"><span class="toc-text">单字符串处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B6%89%E5%8F%8A%E5%A4%9A%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%A4%84%E7%90%86"><span class="toc-text">涉及多字符串的处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%9F%E8%83%BD%E6%9F%A5%E8%AF%A2"><span class="toc-text">功能查询</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Integers-and-Floats"><span class="toc-text">2.Integers and Floats</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E4%B8%8E%E7%B1%BB%E5%9E%8B"><span class="toc-text">定义与类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E8%AE%A1%E7%AE%97"><span class="toc-text">基本计算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%BA%E8%BD%AC%E7%B1%BB%E5%9E%8B"><span class="toc-text">强转类型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Lists-Tuples-and-Sets"><span class="toc-text">3.Lists, Tuples, and Sets</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#list%EF%BC%88%E5%88%97%E8%A1%A8%EF%BC%89%E7%B1%BB%E5%9E%8B"><span class="toc-text">list（列表）类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E4%B8%8E%E8%AE%BF%E9%97%AE%E5%85%83%E7%B4%A0"><span class="toc-text">定义与访问元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A2%9E%E5%8A%A0%E5%85%83%E7%B4%A0"><span class="toc-text">增加元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0"><span class="toc-text">删除元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C"><span class="toc-text">其他操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B3%E4%BA%8Elist%E4%BF%AE%E6%94%B9%E5%80%BC%E7%9A%84%E8%AE%A8%E8%AE%BA"><span class="toc-text">关于list修改值的讨论</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tuple%EF%BC%88%E5%85%83%E7%BB%84%EF%BC%89%E7%B1%BB%E5%9E%8B"><span class="toc-text">tuple（元组）类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#set%EF%BC%88%E9%9B%86%E5%90%88%EF%BC%89%E7%B1%BB%E5%9E%8B"><span class="toc-text">set（集合）类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E7%A9%BAlist%EF%BC%8Ctuple%E5%92%8Cset"><span class="toc-text">创建空list，tuple和set</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Dictionaries"><span class="toc-text">4.Dictionaries</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E4%B8%8E%E8%AE%BF%E9%97%AE"><span class="toc-text">定义与访问</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A2%9E%E5%88%A0%E6%94%B9"><span class="toc-text">增删改</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96"><span class="toc-text">其他</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Conditionals-and-Booleans-If-Else-and-Elif"><span class="toc-text">5.Conditionals and Booleans - If, Else, and Elif</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E8%AF%AD%E5%8F%A5"><span class="toc-text">基本语句</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">逻辑运算符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#is%EF%BC%88%E9%99%84Python%E4%B8%AD%E6%9C%89%E5%85%B3%E5%9C%B0%E5%9D%80%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BA%8B%EF%BC%89"><span class="toc-text">is（附Python中有关地址的一些事）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%BB%98%E8%AE%A4%E4%B8%BA-False"><span class="toc-text">默认为 False</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Loops-and-Iterations-For-While-Loops"><span class="toc-text">Loops and Iterations - For&#x2F;While Loops</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#for-%E5%9F%BA%E6%9C%AC%E8%AF%AD%E5%8F%A5"><span class="toc-text">for 基本语句</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%89%E9%99%90%E6%AC%A1%E5%BE%AA%E7%8E%AF"><span class="toc-text">有限次循环</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#while%E5%9F%BA%E6%9C%AC%E8%AF%AD%E5%8F%A5"><span class="toc-text">while基本语句</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0"><span class="toc-text">练习</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%93%E5%8D%B0%E7%9F%A9%E5%BD%A2"><span class="toc-text">打印矩形</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%93%E5%8D%B0%E4%B8%89%E8%A7%92%E5%BD%A2"><span class="toc-text">打印三角形</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%93%E5%8D%B0%E8%8F%B1%E5%BD%A2"><span class="toc-text">打印菱形</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Functions"><span class="toc-text">Functions</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="toc-text">基本操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#args%E5%92%8C-kwargs"><span class="toc-text">*args和 **kwargs</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%97%E8%A1%A8%E6%8E%A8%E5%AF%BC"><span class="toc-text">列表推导</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%97%E8%A1%A8%E6%8E%A8%E5%AF%BC%E5%BC%8F%E8%AF%AD%E6%B3%95"><span class="toc-text">列表推导式语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E4%B8%AAfor%E5%BE%AA%E7%8E%AF"><span class="toc-text">多个for循环</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A8%E5%AF%BC%E5%BC%8F%E6%89%A9%E5%B1%95"><span class="toc-text">推导式扩展</span></a></li></ol></li></ol></li></ol>
+<h1 id="尝试写一点关于python的笔记"><a href="#尝试写一点关于python的笔记" class="headerlink" title="尝试写一点关于python的笔记"></a>尝试写一点关于python的笔记</h1><h2 id="0-Hello-World"><a href="#0-Hello-World" class="headerlink" title="0.Hello World!"></a>0.Hello World!</h2><p>​    <code>print(&quot;Hello World!&quot;)</code></p>
+<p>​    这个确实应该是所有语言里面最简单的了。</p>
+<h2 id="1-Strings"><a href="#1-Strings" class="headerlink" title="1.Strings"></a>1.Strings</h2><h3 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h3><p>比如现在有一个string类型，以下两种情况皆是合法的：</p>
+<p><code>message=&quot;Hello World!&quot;</code></p>
+<p><code>message=&#39;Hello World!&#39;</code></p>
+<p>Python 在输出既定的带换行的字符串时也很有优势，如下：</p>
+<pre><code class="lang-python">message = &quot;&quot;&quot;Hello
+World&quot;&quot;&quot;
+</code></pre>
+<p>注意要用三个<code>&quot;&quot;&quot;</code>，且不要想着把 <code>Hello</code>和<code>World</code>对齐，否则输出中间一堆空格。</p>
+<h3 id="单字符串处理"><a href="#单字符串处理" class="headerlink" title="单字符串处理"></a>单字符串处理</h3><p>计算字符串长度：<code>len(message)</code></p>
+<p>访问某个字符：<code>message[i]</code></p>
+<p>Slicing Strings：<code>message[i:j]</code></p>
+<p>这样子其实访问的子串的编号区间为</p>
+<script type="math/tex; mode=display">
+[i,j)</script><p>这点务必记清。</p>
+<p>另外，下面两种写法</p>
+<pre><code class="lang-python">message[:i]
+message[j:]
+</code></pre>
+<p>等价于</p>
+<pre><code class="lang-python">message[0:i]
+message[j:len(message)]
+</code></pre>
+<p>将所有字符变为小写：<code>message.lower()</code></p>
+<p>将所有字符变为大写：<code>message.upper()</code></p>
+<p>计算字符串中某子串出现的次数：<code>message.count(&#39;xxx&#39;)</code></p>
+<p>计算字符串中某子串首次出现的位置：<code>message.find(&#39;xxx&#39;)</code></p>
+<h3 id="涉及多字符串的处理"><a href="#涉及多字符串的处理" class="headerlink" title="涉及多字符串的处理"></a>涉及多字符串的处理</h3><p>替换字符串的某部分：（例）</p>
+<pre><code class="lang-python">message = &#39;Hello World&#39; 
+message = message.replace(&quot;World&quot;, &quot;Universe&quot;)
+print(message)
+</code></pre>
+<p>结果为 <code>Hello Universe</code></p>
+<p>注意：直接如下操作无法达到效果：</p>
+<pre><code class="lang-python">message = &#39;Hello World&#39; 
+message.replace(&quot;World&quot;, &quot;Universe&quot;)
+print(message)
+</code></pre>
+<p>原因自然与函数的返回有关</p>
+<p>拼接字符串：</p>
+<p>法一：</p>
+<pre><code class="lang-python">string1 = &quot;Wuhan&quot;
+string2 = &quot;University&quot;
+jiubawu = string1 + &quot; &quot; + string2
+</code></pre>
+<p>这种适合两三个的拼接，长了就要看下面了。</p>
+<p>法二：</p>
+<pre><code class="lang-python">string1 = &quot;Huazhong&quot;
+string2 = &quot;Science and Technology&quot;
+daizhuan = &#39;&#123;&#125; University of &#123;&#125;&#39;.format(string1,string2)
+</code></pre>
+<p>法三（fstring）：</p>
+<pre><code class="lang-python">string1 = &quot;Huazhong&quot;
+string2 = &quot;Science and Technology&quot;
+daizhuan = f&#39;&#123;string1&#125; University of &#123;string2&#125;&#39;
+</code></pre>
+<h3 id="功能查询"><a href="#功能查询" class="headerlink" title="功能查询"></a>功能查询</h3><p>如果想要查询对一个变量可以进行的操作，用下面这条语句：</p>
+<p><code>print(dir(xxx))</code></p>
+<p>xxx可以是数据类型（如str）或变量名（如string1）；</p>
+<p>查询如何操作，用下面这条语句：</p>
+<p><code>print(help(xxx))</code></p>
+<p>xxx只能是数据类型。</p>
+<h2 id="2-Integers-and-Floats"><a href="#2-Integers-and-Floats" class="headerlink" title="2.Integers and Floats"></a>2.Integers and Floats</h2><p>（很多东西没提，代表和C语言无异）</p>
+<h3 id="定义与类型"><a href="#定义与类型" class="headerlink" title="定义与类型"></a>定义与类型</h3><p>定义一个变量的方式：<code>num = 1</code></p>
+<p>Python是一种很方便的语言，故不像C语言分出了 <code>long</code> <code>double</code>等一堆七七八八实际上在人看来差不多的东西。Python里只有两种：<code>int</code>与<code>float</code>。</p>
+<p>如果想要知道一个变量是什么类型，用 <code>type(num)</code></p>
+<h3 id="基本计算"><a href="#基本计算" class="headerlink" title="基本计算"></a>基本计算</h3><p>Python是一种很方便的语言，故它的很多东西都是向人类习惯靠齐的。它不会像C语言一样认为这个的结果是1：</p>
+<pre><code class="lang-c">int main() &#123;
+    int a = 3;
+    int b = 2;
+    cout &lt;&lt; a/b &lt;&lt; endl;
+&#125;
+</code></pre>
+<p>但如果想在Python保留带类型的结果，用 <code>a//b</code>，这样子算出来也是1，但如果只有一个 <code>/</code>那就是1.5。</p>
+<p>另外，</p>
+<script type="math/tex; mode=display">
+a^b</script><p>为 <code>a**b</code></p>
+<p>算绝对值用 <code>abs()</code></p>
+<p>求和已知数最接近的整数用 <code>round(num)</code></p>
+<p>如果是最接近的n位小数，用 <code>round(num,n)</code>（注意：当num为小数 &amp;&amp; n == 0时输出为类似 <code>1.0</code>的形式）</p>
+<p>另外，Python中没有自增运算符 <code>i++</code>。</p>
+<h3 id="强转类型"><a href="#强转类型" class="headerlink" title="强转类型"></a>强转类型</h3><p>举例</p>
+<pre><code class="lang-python">num1 = &#39;100&#39;
+num2 = &#39;200&#39;
+print(num1 + num2)
+num1 = int(num1)
+num2 = int(num2)
+print(num1 + num2)
+</code></pre>
+<p>输出为：</p>
+<pre><code class="lang-python">100200
+300
+</code></pre>
+<p>注意强转类型打括号的地方和C正好是反的。</p>
+<h2 id="3-Lists-Tuples-and-Sets"><a href="#3-Lists-Tuples-and-Sets" class="headerlink" title="3.Lists, Tuples, and Sets"></a>3.Lists, Tuples, and Sets</h2><h3 id="list（列表）类型"><a href="#list（列表）类型" class="headerlink" title="list（列表）类型"></a>list（列表）类型</h3><h4 id="定义与访问元素"><a href="#定义与访问元素" class="headerlink" title="定义与访问元素"></a>定义与访问元素</h4><p>定义：<code>universities = [&#39;huake&#39;,&#39;wuda&#39;,&#39;qinghua&#39;,&#39;beida&#39;]</code></p>
+<p>计算数组长度：<code>len(list)</code></p>
+<p>访问全部元素：<code>print(universities)</code>，输出为 <code>[&#39;huake&#39;, &#39;wuda&#39;, &#39;qinghua&#39;, &#39;beida&#39;]</code></p>
+<p>访问某一个：list下标也是从0开始的。如上例，直接<code>print(universities[0])</code>即可输出 <code>huake</code></p>
+<p>而 <code>universities[-2]</code>指倒数第二个元素，即 <code>qinghua</code>（其实<code>string</code>也可以这么用）。</p>
+<p>得到中间的某串元素，如第0至2个，用 <code>universities[0:3]</code>，和<code>string</code>一样，注意左闭右开。</p>
+<p>另外，下面两种写法</p>
+<pre><code class="lang-python">message[:i]
+message[j:]
+</code></pre>
+<p>也可直接套到list上面来。</p>
+<h4 id="增加元素"><a href="#增加元素" class="headerlink" title="增加元素"></a>增加元素</h4><p>如上例，增加元素至list末尾用 <code>universities.append(&#39;xxx&#39;)</code></p>
+<p>插入到第n个位置用 <code>universities.insert(n,&#39;xxx&#39;)</code></p>
+<p>将一个list接在另一个list结尾</p>
+<pre><code class="lang-python">universities1 = [&#39;huake&#39;,&#39;wuda&#39;,&#39;qinghua&#39;,&#39;beida&#39;]
+universities2 = [&#39;fudan&#39;,&#39;shangjiao&#39;]
+universities1.extend(universities2)
+</code></pre>
+<p>如果直接用 <code>append</code>，输出是</p>
+<p><code>[&#39;huake&#39;, &#39;wuda&#39;, &#39;qinghua&#39;, &#39;beida&#39;, [&#39;fudan&#39;, &#39;shangjiao&#39;]]</code></p>
+<p>集合当元素了，这离散正讲着集合论就有活生生的例子出来了。</p>
+<p>YouTube中并没有讲如何将一个list插入另一个list。是用切片（slice）做的：</p>
+<pre><code class="lang-python">universities1 = [&#39;huake&#39;,&#39;wuda&#39;,&#39;qinghua&#39;,&#39;beida&#39;]
+universities2 = [&#39;fudan&#39;,&#39;shangjiao&#39;]
+universities1[1:1] = universities2
+</code></pre>
+<h4 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h4><p><code>universities.remove(&#39;wuda&#39;)</code>或<code>universities.remove(universities[1])</code></p>
+<p>删除最后一个：<code>universities.pop()</code>，显然服务于栈和队列。</p>
+<p>为了更好地服务，<code>universities.pop()</code>返回被删除的元素。</p>
+<h4 id="其他操作"><a href="#其他操作" class="headerlink" title="其他操作"></a>其他操作</h4><p>反转list：<code>universities.reverse()</code></p>
+<p>排序：<code>universities.sort()</code></p>
+<p>反向排序：<code>universities.sort(reverse=True)</code>（<code>True</code>首字母大写）</p>
+<p>获得排序后的list并保留原list：<code>sort_universities = sorted(universities)</code></p>
+<p>list最小值：<code>min(universities)</code>最大值：<code>max(universities)</code></p>
+<p>求和（元素类型需是int）：<code>sum(nums)</code></p>
+<p>查询某个元素在list中的位置：<code>universities.index(&#39;huake&#39;)</code></p>
+<p>查询list中是否有某个元素<code>&#39;xxx&#39; in universities</code>，返回 <code>True</code>或 <code>False</code></p>
+<p>循环输出每一个元素（<code>for</code>的首次出现）</p>
+<pre><code class="lang-python">universities = [&#39;huake&#39;,&#39;wuda&#39;,&#39;qinghua&#39;,&#39;beida&#39;]
+for university in universities: #注意冒号
+    print(university) #注意缩进
+</code></pre>
+<p>事实上<code>university</code>可被替换成随便什么别的，如 <code>i</code> <code>j</code> <code>k</code>或别的什么（不过C语言中也可以，谁说for一定要用<code>i</code> <code>j</code> <code>k</code>）</p>
+<p>循环输出，还加编号：</p>
+<pre><code class="lang-python">universities = [&#39;huake&#39;,&#39;wuda&#39;,&#39;qinghua&#39;,&#39;beida&#39;]
+for index,university in enumerate(universities): 
+    print(index,university)
+</code></pre>
+<p><code>index</code>也可以改成别的名字，加编号靠的是<code>enumerate()</code>，enumerate的中文意思是”列举“。</p>
+<p>这样子的结果为：</p>
+<pre><code class="lang-python">0 huake
+1 wuda
+2 qinghua
+3 beida
+</code></pre>
+<p>如果不想从0开始，可以这样改：</p>
+<p><code>for index,university in enumerate(universities,start = 1):</code></p>
+<p>然后就是：</p>
+<pre><code class="lang-python">1 huake
+2 wuda
+3 qinghua
+4 beida
+</code></pre>
+<p>list变string：<code>unistr = &quot;, &quot;.join(universities)</code></p>
+<p><code>&quot;, &quot;</code>可以改成别的任何字符串，这样就会在两个元素中间加那个字符串</p>
+<p>string变list：现在你有了一个字符串，可能它长这样：<code>str = &quot;A-B-C-D&quot;</code>。现在我们要把<code>ABCD</code>存到</p>
+<p>list里去，用：<code>list = unistr.split(&quot;-&quot;)</code></p>
+<h4 id="关于list修改值的讨论"><a href="#关于list修改值的讨论" class="headerlink" title="关于list修改值的讨论"></a>关于list修改值的讨论</h4><p>考虑如下代码：</p>
+<pre><code class="lang-python">univ1 = [&#39;huake&#39;,&#39;wuda&#39;,&#39;qinghua&#39;,&#39;beida&#39;]
+univ2 = univ1
+univ1[1]=&#39;huakefushu&#39;
+print(univ1,univ2)
+</code></pre>
+<p>它的输出为：<code>[&#39;huake&#39;, &#39;huakefushu&#39;, &#39;qinghua&#39;, &#39;beida&#39;] [&#39;huake&#39;, &#39;huakefushu&#39;, &#39;qinghua&#39;, &#39;beida&#39;]</code></p>
+<p>“但是，我只改变了<code>univ1</code>的值啊！”</p>
+<p>这是因为list是可变对象，变量名univ1和univ2是绑定的同一内存地址，对任一个变量对应的值得改变，都会反映到另一个变量上。这点务必要注意。</p>
+<h3 id="tuple（元组）类型"><a href="#tuple（元组）类型" class="headerlink" title="tuple（元组）类型"></a>tuple（元组）类型</h3><p>tuple类型与list类型很像，但最大的不同是tuple<strong>不可修改</strong>。定义一个tuple变量的方式如下：</p>
+<p><code>universities = (&#39;huake&#39;,&#39;wuda&#39;,&#39;qinghua&#39;,&#39;beida&#39;)</code></p>
+<p><code>[]</code>改 <code>()</code>即可。</p>
+<h3 id="set（集合）类型"><a href="#set（集合）类型" class="headerlink" title="set（集合）类型"></a>set（集合）类型</h3><p>定义set类型<code>universities = &#123;&#39;huake&#39;,&#39;wuda&#39;,&#39;qinghua&#39;,&#39;beida&#39;&#125;</code></p>
+<p>set的特点：1.无序性 2.互异性</p>
+<p>对，set就是集合。</p>
+<p>set常用于判断元素是否属于集合——list与tuple也能做，但set更快。set也可以用于丢掉没用的元素——毕竟这是集合的性质。</p>
+<p>set的另外一个功能是用于求两个集合的交并差集，如下：</p>
+<pre><code class="lang-python">univ1 = &#123;&#39;huake&#39;,&#39;wuda&#39;,&#39;qinghua&#39;,&#39;beida&#39;&#125;
+univ2 = &#123;&#39;huake&#39;,&#39;hagong&#39;,&#39;xijiao&#39;,&#39;dongnan&#39;&#125;
+print(univ1.intersection(univ2)) #求交集
+print(univ1.union(univ2)) #求并集
+print(univ1.difference(univ2)) #求差集
+</code></pre>
+<p>输出结果为 </p>
+<pre><code class="lang-python">&#123;&#39;huake&#39;&#125;
+&#123;&#39;wuda&#39;, &#39;beida&#39;, &#39;dongnan&#39;, &#39;xijiao&#39;, &#39;huake&#39;, &#39;qinghua&#39;, &#39;hagong&#39;&#125;
+&#123;&#39;wuda&#39;, &#39;beida&#39;, &#39;qinghua&#39;&#125;
+</code></pre>
+<h3 id="创建空list，tuple和set"><a href="#创建空list，tuple和set" class="headerlink" title="创建空list，tuple和set"></a>创建空list，tuple和set</h3><p>如下：</p>
+<pre><code class="lang-python">emptylist1 = []
+emptylist2 = list()
+emptytuple1 = ()
+emptytuple2 = tuple()
+emptyset1 = &#123;&#125; #这个不行，这样子创建的是dictionary型
+emptyset2 = set() #只有这个可以
+</code></pre>
+<h2 id="4-Dictionaries"><a href="#4-Dictionaries" class="headerlink" title="4.Dictionaries"></a>4.Dictionaries</h2><p>Python里的dictionary类型在其他语言中可能会被称为Hash Map，采用键值存储（key–value database），可用于快速查找（哈希表的时间复杂度为</p>
+<script type="math/tex; mode=display">
+O(1)</script><p>)</p>
+<h3 id="定义与访问"><a href="#定义与访问" class="headerlink" title="定义与访问"></a>定义与访问</h3><p>定义dictionary类型：<code>student = &#123;&#39;name&#39;:&#39;Mike&#39;,&#39;age&#39;:25, &#39;courses&#39;:[&#39;math&#39;,&#39;art&#39;]&#125;</code></p>
+<p>查询dictionary中某个键的值：<code>student[&#39;courses&#39;]</code></p>
+<p>但这种访问方式不太安全。当想要查询的键不存在时，会直接报错。一个更稳妥的方法是用：<code>student.get(&#39;courses&#39;)</code>，此时当键不存在时返回 <code>None</code>。</p>
+<p>甚至还可以定义当键不存在时应该返回什么：<code>student.get(&#39;courses&#39;,&#39;404&#39;)</code></p>
+<p>这样子，如果代码是：<code>student.get(&#39;course&#39;,&#39;404&#39;)</code>，就会输出 <code>404</code>。</p>
+<h3 id="增删改"><a href="#增删改" class="headerlink" title="增删改"></a>增删改</h3><p>增加和改动是一样的，接上例：</p>
+<pre><code>student[&#39;phone&#39;] = &#39;13588888888&#39; #增
+student[&#39;age&#39;] = 18 #改
+</code></pre><p>还有更简单的方法：</p>
+<p><code>student.update(&#123;&#39;age&#39;:18,&#39;phone&#39;:&#39;13588888888&#39;&#125;)</code></p>
+<p><code>update()</code>要求传入一个新dictionary</p>
+<p>第一种删除的方法是用 关键字<code>del</code>：<code>del student[&#39;courses&#39;]</code></p>
+<p>第二种方法是用 <code>pop()</code>：<code>student.pop(&#39;courses&#39;)</code>，且和list中讲的一样，<code>pop()</code>可以返回被删除的元素。</p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>查找键的个数：<code>len(student)</code></p>
+<p>只访问键：<code>student.keys()</code></p>
+<p>只访问值：<code>student.values()</code></p>
+<p>访问键和值：<code>student.items()</code></p>
+<p>直接用 <code>print(student)</code>不也差不多吗？别急，下面就有应用：</p>
+<p>循环输出：</p>
+<pre><code class="lang-python">student = &#123;&#39;name&#39;:&#39;Mike&#39;,&#39;age&#39;:25, &#39;courses&#39;:[&#39;math&#39;,&#39;art&#39;]&#125;
+for i in student:
+    print(i)
+</code></pre>
+<p>但这样子的输出只有键：</p>
+<pre><code class="lang-python">name
+age
+courses
+</code></pre>
+<p>但如果这样：</p>
+<pre><code class="lang-python">student = &#123;&#39;name&#39;:&#39;Mike&#39;,&#39;age&#39;:25, &#39;courses&#39;:[&#39;math&#39;,&#39;art&#39;]&#125;
+for i in student.items():
+    print(i)
+</code></pre>
+<p>输出会变成：</p>
+<pre><code class="lang-python">(&#39;name&#39;, &#39;Mike&#39;)
+(&#39;age&#39;, 25)
+(&#39;courses&#39;, [&#39;math&#39;, &#39;art&#39;])
+</code></pre>
+<p>更进一步：</p>
+<pre><code class="lang-python">student = &#123;&#39;name&#39;:&#39;Mike&#39;,&#39;age&#39;:25, &#39;courses&#39;:[&#39;math&#39;,&#39;art&#39;]&#125;
+for i,j in student.items():
+    print(i,j)
+</code></pre>
+<p>那么输出为：</p>
+<pre><code class="lang-python">name Mike
+age 25
+courses [&#39;math&#39;, &#39;art&#39;]
+</code></pre>
+<h2 id="5-Conditionals-and-Booleans-If-Else-and-Elif"><a href="#5-Conditionals-and-Booleans-If-Else-and-Elif" class="headerlink" title="5.Conditionals and Booleans - If, Else, and Elif"></a>5.Conditionals and Booleans - If, Else, and Elif</h2><h3 id="基本语句"><a href="#基本语句" class="headerlink" title="基本语句"></a>基本语句</h3><pre><code class="lang-python">if [判断]:
+    [执行语句]
+elif [判断]:
+    [执行语句]
+else:
+    [执行语句]
+</code></pre>
+<h3 id="逻辑运算符"><a href="#逻辑运算符" class="headerlink" title="逻辑运算符"></a>逻辑运算符</h3><p><code>and</code> <code>or</code> <code>not</code></p>
+<p>这个就没什么好讲的了。</p>
+<h3 id="is（附Python中有关地址的一些事）"><a href="#is（附Python中有关地址的一些事）" class="headerlink" title="is（附Python中有关地址的一些事）"></a><code>is</code>（附Python中有关地址的一些事）</h3><p><code>is</code>用于判断两个变量的地址是否相等——<code>==</code>只能看两个值是否一样，但只有内存相等，那我们才能说 <code>a is b</code></p>
+<p>如下例：</p>
+<pre><code>a = [1,2,3]
+b = [1,2,3]
+print(id(a),&quot;  &quot;,id(b))
+print(a is b)
+</code></pre><p>结果为：</p>
+<pre><code class="lang-python">2519572185472    2519572513920
+False
+</code></pre>
+<p>对了忘了说了，查地址用 <code>id()</code>。</p>
+<p>然而在实验时，很惊讶地发现这样一件事：</p>
+<pre><code class="lang-python">a = (1,2,3)
+b = (1,2,3)
+print(id(a),&quot;  &quot;,id(b))
+print(a is b)
+</code></pre>
+<p>结果为：</p>
+<pre><code class="lang-python">2585870549184    2585870549184
+True
+</code></pre>
+<p>这是为什么？在网上找了一下，找到一个<a target="_blank" rel="noopener" href="https://blog.icexmoon.xyz/archives/129.html">说得比较全的</a>，保险起见复制下来好了：</p>
+<blockquote>
+<p>我们之前提到过，Python中有一些和我们认知不同的事情，比如：</p>
+<pre><code class="lang-python">a = 1
+b = 1
+print(a is b)
+a = (1, 2, 3)
+b = (1, 2, 3)
+print(a is b)
+# True
+# True
+</code></pre>
+<p>还有更奇怪的：</p>
+<pre><code class="lang-python">a = (1,2,3)
+b = tuple(a)
+print(a is b)
+# True
+</code></pre>
+<p>所有的这些，其实都是一种Python解释器的优化机制，它会使用类似Java中字符串常量池的做法，把对不可变对象的引用指向相同的一个对象，避免重复构建不必要的对象，这样做会避免不必要的空间开销。这种做法在Python中称为“驻留”。</p>
+<p>需要说明的是，驻留是属于Python解释器的实现细节，普通开发者无需细究，也不能依赖于这一特性，因为实际运行中，相同的不可变元素的引用是否一定会指向同一个变量，那取决于Python解释器。</p>
+<p>我们也不必担心可能出现的bug，比如：</p>
+<pre><code class="lang-python">a = (1,2,3,[1,2])
+b = (1,2,3,[1,2])
+print(a is b)
+# False
+</code></pre>
+<p>当元组包含可变容器的时候，解释器很聪明地没有使用同一引用。</p>
+</blockquote>
+<p>然而其实这个也是对的：</p>
+<pre><code class="lang-python">a = [1,2,3]
+b = a
+print(a is b)
+# True
+</code></pre>
+<p>但是，再往下又会发现不对：</p>
+<pre><code class="lang-python">a = [1,2,3]
+b = a
+print(a is b)
+print(id(a))
+print(id(b))
+b = (1,2,4)
+print(a is b)
+print(id(b))
+# True
+# 2290771788160
+# 2290771788160
+# False
+# 2290772033728
+</code></pre>
+<p>暂时不深入看了，实验到这里也能自己看出一点规律了罢（雾）。</p>
+<h3 id="默认为-False"><a href="#默认为-False" class="headerlink" title="默认为 False"></a>默认为 <code>False</code></h3><p><code>False</code> ,<code>None</code>,<code>0</code>,<code>&#39; &#39;</code>,<code>()</code>,<code>[]</code>,<code>&#123;&#125;</code> </p>
+<h2 id="Loops-and-Iterations-For-While-Loops"><a href="#Loops-and-Iterations-For-While-Loops" class="headerlink" title="Loops and Iterations - For/While Loops"></a>Loops and Iterations - For/While Loops</h2><h3 id="for-基本语句"><a href="#for-基本语句" class="headerlink" title="for 基本语句"></a><code>for</code> 基本语句</h3><p><code>for i in xxx :</code></p>
+<p>这个语句里面就默认了每次循环完后会进行一次 <code>i++</code>。不过由于Python语言特性，<code>for</code>循环中的变量建议见名知意。</p>
+<p><code>break</code>和 <code>continue</code>用法不变。</p>
+<h3 id="有限次循环"><a href="#有限次循环" class="headerlink" title="有限次循环"></a>有限次循环</h3><p>例：<code>for i in range(1:11)</code>，这个代表循环从1到10。</p>
+<h3 id="while基本语句"><a href="#while基本语句" class="headerlink" title="while基本语句"></a><code>while</code>基本语句</h3><p><code>while xxx:</code></p>
+<p>其余与C语言无异。</p>
+<p>由于Python中的<code>for</code>循环没有体现出条件判断的功能，故若涉及条件判断还请多用 <code>while</code>。</p>
+<h3 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h3><h4 id="打印矩形"><a href="#打印矩形" class="headerlink" title="打印矩形"></a>打印矩形</h4><pre><code class="lang-python">for i in range(6):
+    for j in range(4):
+        print(&#39;*&#39;, end=&quot;&quot;)
+    print()
+</code></pre>
+<h4 id="打印三角形"><a href="#打印三角形" class="headerlink" title="打印三角形"></a>打印三角形</h4><pre><code class="lang-python">for i in range(6):
+    for j in range(i+1):
+        print(&#39;*&#39;, end=&quot;&quot;)
+    print()
+</code></pre>
+<h4 id="打印菱形"><a href="#打印菱形" class="headerlink" title="打印菱形"></a>打印菱形</h4><pre><code class="lang-python">for i in range(1,6):
+    for j in range(1,6-i+1):
+            print(&#39; &#39;,end=&quot;&quot;)
+    for j in range(6-i+1,6+i):
+            print(&#39;*&#39;,end=&quot;&quot;)
+    print()
+i = 4
+while i&gt;=1:
+    for j in range(1,6-i+1):
+            print(&#39; &#39;,end=&quot;&quot;)
+    for j in range(6-i+1,6+i):
+            print(&#39;*&#39;,end=&quot;&quot;)
+    print()
+    i-=1
+</code></pre>
+<h2 id="Functions"><a href="#Functions" class="headerlink" title="Functions"></a>Functions</h2><h3 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h3><p>定义一个空函数：</p>
+<pre><code class="lang-python">def func():
+    pass
+</code></pre>
+<p><code>pass</code>保证当这个函数还只是空函数时编译器不会报错。</p>
+<p>基本操作与C中无异。</p>
+<p>视频中提到了函数默认参数，这玩意C中也是有的，怕不记得提一嘴。</p>
+<h3 id="args和-kwargs"><a href="#args和-kwargs" class="headerlink" title="*args和 **kwargs"></a><code>*args</code>和 <code>**kwargs</code></h3><p><code>*args</code> 和<code>**kwargs</code>主要用于函数定义，用于将不定数量的参数传递给一个函数。</p>
+<p>例如：<code>def func(*args,**kwargs)：</code></p>
+<p><code>*args</code> 表示任何多个无名参数，它是一个<code>tuple</code>；<code>**kwargs</code> 表示关键字参数，它是一个<code>dict</code>。并且同时使用<code>*args</code>和<code>**kwargs</code>时，必须<code>*args</code>参数列要在<code>**kwargs</code>前，像<code>foo(a=1, b=&#39;2&#39;, c=3, a&#39;, 1, None, )</code>这样调用的话，会提示语法错误<code>“SyntaxError: non-keyword arg after keyword arg”</code>。</p>
+<p>其实不一定要叫<code>*args</code>和 <code>**kwargs</code>，你随便叫什么别的也没问题，但这个算是约定俗成了。因为 <code>*args</code>全称arguments，<code>**kwargs</code>全称keyword arguments，即“参数”和“关键字参数”。</p>
+<p>使用例：</p>
+<pre><code class="lang-python">def func(*args,**kwargs):
+    print(args)
+    print(kwargs)
+
+func(1,2,3,4,d=100,e=&#39;a hundred&#39;)
+# (1, 2, 3, 4)
+# &#123;&#39;d&#39;: 100, &#39;e&#39;: &#39;a hundred&#39;&#125;
+</code></pre>
+<h2 id="列表推导"><a href="#列表推导" class="headerlink" title="列表推导"></a>列表推导</h2><p>自从大一暑假花了两天时间（应该是）用Matthes的书把Python过了一遍后才发现Python根本不需要看视频，看书就完全可以了。然后后面就一直没打开过这个文件了。</p>
+<p>这次是一点进阶的东西：列表推导。因为个人认为这玩意很帅。</p>
+<h3 id="列表推导式语法"><a href="#列表推导式语法" class="headerlink" title="列表推导式语法"></a>列表推导式语法</h3><p>1.简单版语法：[表达式 for 变量 in 可迭代对象]</p>
+<pre><code class="lang-python">#生成一个1-10的列表，
+#x代表向列表中添加的元素，而x来自于后面for循环
+[x for x in range(1,11)]
+</code></pre>
+<p>2.带条件无else： [表达式 for 变量 in 可迭代对象 if 条件语句]</p>
+<pre><code class="lang-python">#生成一个0-9的偶数列表
+#x代表向列表中添加的元素，x来自于后面for循环，但是x要满足后面if条件才往列表中添加
+[x for x in range(10) if x%2==0]
+</code></pre>
+<p>3.带条件且有else：[表达式 if 条件语句 else 条件语句 for 变量 in 可迭代对象]</p>
+<pre><code class="lang-python">#生成一个0-10的列表，其中偶数加2 ，奇数+1
+#x 如果满足条件语句就执行if前面的x+2，如果不满足则执行else后面的x+1
+[x+2 if x%2==0 else x+1 for x in range(11)]
+</code></pre>
+<p>如果要用else的话for就要挪到后面去。</p>
+<h3 id="多个for循环"><a href="#多个for循环" class="headerlink" title="多个for循环"></a>多个for循环</h3><p>语法： 表达式 第一个for 第二个for</p>
+<p>假如要生成一个列表，每个元素由1-4的奇数，和1-4的偶数对应：[(1, 2), (1, 4), (3, 2), (3, 4)]</p>
+<pre><code class="lang-python">#不使用列表推导式，一般方法：
+
+l1=[]
+for i in range(1,5):
+    if i%2!=0:
+        for j in range(1,5):
+            if j%2==0:
+                l1.append((i,j))
+print(l1)
+
+#如果使用列表推导式：
+#（i,j）是要添加到列表的数据变量 
+# i的取值 第一个for i in  range（1,5） 条件是i%2！=0
+l3=[(i,j) for i in range(1,5) if i%2!=0 for j in range(1,5) if j%2==0]
+print(l3)
+</code></pre>
+<h3 id="推导式扩展"><a href="#推导式扩展" class="headerlink" title="推导式扩展"></a>推导式扩展</h3><p>不止列表有推导式，还有字典推导式，集合推导式（语法相同只是外边[]变成{}）</p>
+<pre><code class="lang-python">#字典推导式
+dict1=&#123;&#39;name&#39;:&#39;jimi&#39;,&#39;age&#39;:300&#125;
+#k的值是age时产生一个新的字典
+d1=&#123;k:v for k,v in dict1.items() if k is &#39;age&#39; &#125;
+print(d1)
+
+#集合推导式
+l1=[1,1,2,3,4,4,4]
+s1=&#123;i for i in l1&#125;
+print(s1)
+</code></pre>
+<p>以上内容全是从CSDN上剽的，这玩意要想熟练掌握还得靠自己平时多加练习。</p>
+
+
+<!--<a href="https://asparticguan.github.io/blog/Python%E6%9C%AD%E8%AE%B0.html#disqus_thread" class="article-comment-link">Comments</a>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = ''; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+-->
+<div style="display:none">
+<script src="http://s4.cnzz.com/stat.php?id=&web_id=" language="JavaScript"></script>script>
+</div>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+</body>
+</html>

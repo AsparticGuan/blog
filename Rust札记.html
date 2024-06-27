@@ -1,0 +1,908 @@
+<html>
+<head>
+	
+	<title>Rust札记</title>
+	<meta name="keywords" content="fzb.me,冯宗宝,冯宗宝的blog" />
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    
+	   <link href="/blog/css/main.css?v=3" rel="stylesheet" type="text/css" />
+    
+        
+<script src="/blog/js/util.js"></script>
+
+        <script>
+            if(isMobile()) {
+                loadjscssfile('../css/mobile.css', 'css');
+            } else {
+                loadjscssfile('../css/desktop.css', 'css');
+            }
+        </script> 
+    
+
+    <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Atom feed">
+
+    
+	<link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=3"/>
+    
+    
+
+<meta name="generator" content="Hexo 6.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+<body>
+
+
+<h2 class="title">Rust札记</h2>
+<!--
+<div style="text-align:center;margin-top: -10px;">
+<div class="article-category">
+发表于2022年3月14日
+
+
+
+
+ </div>
+-->
+</div>
+
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8E%9F%E7%A5%9E%EF%BC%8C%E5%90%AF%E5%8A%A8%EF%BC%81%E2%80%94%E2%80%94Rust%E6%9C%AD%E8%AE%B0"><span class="toc-text">原神，启动！——Rust札记</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E7%BB%91%E5%AE%9A%E4%B8%8E%E8%A7%A3%E6%9E%84"><span class="toc-text">变量绑定与解构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E5%80%BC%E7%B1%BB%E5%9E%8B"><span class="toc-text">数值类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E5%8F%A5%E5%92%8C%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-text">语句和表达式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0"><span class="toc-text">函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%80%E6%9C%89%E6%9D%83"><span class="toc-text">所有权</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AC%E7%A7%BB%E6%89%80%E6%9C%89%E6%9D%83"><span class="toc-text">转移所有权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E5%92%8C%E5%80%9F%E7%94%A8"><span class="toc-text">引用和借用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E5%90%88%E7%B1%BB%E5%9E%8B"><span class="toc-text">复合类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-text">字符串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%83%E7%BB%84"><span class="toc-text">元组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-text">结构体</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%9A%E4%B8%BE"><span class="toc-text">枚举</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E7%BB%84"><span class="toc-text">数组</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6"><span class="toc-text">流程控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D"><span class="toc-text">模式匹配</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#match-%E4%B8%8E-if-let"><span class="toc-text">match 与 if let</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%91%E5%AE%9A"><span class="toc-text">@绑定</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%B3%95"><span class="toc-text">方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%9B%E5%9E%8B%E4%B8%8E%E7%89%B9%E5%BE%81"><span class="toc-text">泛型与特征</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%9B%E5%9E%8B"><span class="toc-text">泛型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E5%BE%81"><span class="toc-text">特征</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vector%E5%92%8CHashmap"><span class="toc-text">Vector和Hashmap</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-text">生命周期</span></a></li></ol></li></ol>
+<h1 id="原神，启动！——Rust札记"><a href="#原神，启动！——Rust札记" class="headerlink" title="原神，启动！——Rust札记"></a>原神，启动！——Rust札记</h1><h2 id="变量绑定与解构"><a href="#变量绑定与解构" class="headerlink" title="变量绑定与解构"></a>变量绑定与解构</h2><p>我们只说重点。</p>
+<ol>
+<li>直接<code>let x = 5</code>这样声明后<code>x</code>就不能改了。如果还想改请写成<code>let mut x = 5</code>。<code>mut</code>即mutable。</li>
+<li>如果声明了不使用会报警告。要么在变量名前加下划线写成<code>let _x = 5</code>，要么在开头加注释<code>#[allow(unused_variables)]</code>。</li>
+<li>任意类型的基本变量输出都可以用<code>println!("{:?}",x)</code>这样的形式。</li>
+<li>Rust 允许声明相同的变量名，在后面声明的变量会遮蔽掉前面声明的，且允许类型不同。这是<code>mut</code>做不到的。</li>
+<li>Rust中的const：<code>const MAX_POINTS: u32 = 100_000;</code>，注意常量名建议全大写，且必须显式指明类型。</li>
+</ol>
+<h2 id="数值类型"><a href="#数值类型" class="headerlink" title="数值类型"></a>数值类型</h2><p>首先应该厘清两个在用Visual Studio时就该厘清的概念：Debug和Release。Debug 配置主要用于开发和调试，提供更多的开发支持和错误检测。Release 配置则用于最终的产品发布，注重性能和可执行文件大小。</p>
+<ol>
+<li>在当使用 <code>--release</code> 参数进行 release 模式构建时，Rust<strong>不</strong>检测溢出。相反，当检测到整型溢出时，Rust 会按照补码循环溢出（<em>two’s complement wrapping</em>）的规则处理。</li>
+<li>fw语言，跟C一样算不清数。</li>
+<li><code>for i in 1..5</code>：1,2,3,4；<code>for i in 1..=5</code>：1,2,3,4,5。这个叫做序列，数字和字符都可以用。</li>
+<li>对于数学上未定义的结果，例如对负数取平方根 <code>-42.1.sqrt()</code> ，会产生一个特殊的结果：Rust 的浮点数类型使用 <code>NaN</code> (not a number)来处理这些情况。所有跟 NaN 交互的操作，都会返回一个 NaN，而且 NaN 不能用来比较。</li>
+<li>用as来做类型转换，如<code>let e: u32 = 100; let _f = e as i64;</code>转成<code>i64</code>。</li>
+</ol>
+<h2 id="语句和表达式"><a href="#语句和表达式" class="headerlink" title="语句和表达式"></a>语句和表达式</h2><p>在我们Rust中，语句和表达式是两种东西。语句完成操作但不返回值，表达式求值并返回值。</p>
+<pre><code class="lang-rust">fn main() {
+    let y = {
+        let x = 3;
+        x + 1
+    };
+
+    println!("The value of y is: {}", y);
+}
+</code></pre>
+<p>以上述代码为例，<strong>表达式不能包含分号</strong>。这一点非常重要，一旦你在表达式后加上分号，它就会变成一条语句，再也不会返回一个值。上述代码的结果显然是4。</p>
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><ul>
+<li>函数名和变量名使用<a target="_blank" rel="noopener" href="https://course.rs/practice/naming.html">蛇形命名法(snake case)</a>，例如 <code>fn add_two() -&gt; {}</code></li>
+<li>函数的位置可以随便放，Rust 不关心我们在哪里定义了函数，只要有定义即可</li>
+<li>每个函数参数都需要标注类型</li>
+</ul>
+<p>函数声明中需标注每一个变量的类型。</p>
+<p>一般返回值直接写成表达式。在表达式前面加return也可以。加了return后在最后加引号也可以。即<code>x + 5</code>、 <code>return x + 5</code>、 <code>return x + 5;</code> 都可以，唯独<code>x + 5;</code>不行。</p>
+<p>当用 <code>!</code> 作函数返回类型的时候，表示该函数永不返回( diverge function )，特别的，这种语法往往用做会导致程序崩溃的函数：</p>
+<pre><code class="lang-rust">fn dead_end() -&gt; ! {
+  panic!("你已经到了穷途末路，崩溃吧！");
+}
+</code></pre>
+<pre><code class="lang-rust">fn forever() -&gt; ! {
+  loop {
+    //...
+  };
+} // 永不退出循环，故永不返回
+</code></pre>
+<h2 id="所有权"><a href="#所有权" class="headerlink" title="所有权"></a>所有权</h2><p>所有的程序都必须和计算机内存打交道，如何从内存中申请空间来存放程序的运行内容，如何在不需要的时候释放这些空间，成了重中之重，也是所有编程语言设计的难点之一。在计算机语言不断演变过程中，出现了三种流派：</p>
+<ul>
+<li><strong>垃圾回收机制(GC)</strong>，在程序运行时不断寻找不再使用的内存，典型代表：Java、Go</li>
+<li><strong>手动管理内存的分配和释放</strong>, 在程序中，通过函数调用的方式来申请和释放内存，典型代表：C++</li>
+<li><strong>通过所有权来管理内存</strong>，编译器在编译时会根据一系列规则进行检查，典型代表：Rust</li>
+</ul>
+<p>栈中的所有数据都必须占用已知且固定大小的内存空间，假设数据大小是未知的，那么在取出数据时，你将无法取到你想要的数据。</p>
+<p>与栈不同，对于大小未知或者可能变化的数据，我们需要将它存储在堆上。</p>
+<p>当向堆上放入数据时，需要请求一定大小的内存空间。操作系统在堆的某处找到一块足够大的空位，把它标记为已使用，并返回一个表示该位置地址的<strong>指针</strong>, 该过程被称为<strong>在堆上分配内存</strong>，有时简称为 “分配”(allocating)。</p>
+<p>接着，该指针会被推入<strong>栈</strong>中，因为指针的大小是已知且固定的，在后续使用过程中，你将通过栈中的<strong>指针</strong>，来获取数据在堆上的实际内存位置，进而访问该数据。</p>
+<p>由上可知，堆是一种缺乏组织的数据结构。想象一下去餐馆就座吃饭: 进入餐馆，告知服务员有几个人，然后服务员找到一个够大的空桌子（堆上分配的内存空间）并领你们过去。如果有人来迟了，他们也可以通过桌号（栈上的指针）来找到你们坐在哪。</p>
+<p>栈比堆要快。</p>
+<p><strong>重要的所有权规则</strong></p>
+<blockquote>
+<p>[!IMPORTANT]</p>
+<ol>
+<li><strong>Rust 中每一个值都被一个变量所拥有，该变量被称为值的所有者</strong></li>
+<li><strong>一个值同时只能被一个变量所拥有，或者说一个值只能拥有一个所有者</strong></li>
+<li><strong>当所有者(变量)离开作用域范围时，这个值将被丢弃(drop)</strong></li>
+</ol>
+</blockquote>
+<p>字符串类型：Rust中有两种字符串类型，一种是字符串字面值<code>&amp;str</code>，用法为：<code>let s ="hello"</code>，即硬编码。还有一种为动态字符串<code>String</code>，用法为：<code>let s = String::from("hello");</code></p>
+<h3 id="转移所有权"><a href="#转移所有权" class="headerlink" title="转移所有权"></a>转移所有权</h3><pre><code class="lang-rust">let x = 5;
+let y = x;
+</code></pre>
+<p>在这段代码中没有所有权的转移，而是用值拷贝的方式完成的，是自动拷贝。</p>
+<pre><code class="lang-rust">let s1 = String::from("hello");
+let s2 = s1;
+</code></pre>
+<p>但是这段代码不一样。区别在于<code>String</code>是复杂类型，由存储在栈中的<strong>堆指针</strong>、<strong>字符串长度</strong>、<strong>字符串容量</strong>共同组成。就不能单纯浅拷贝了，要用<code>let s2 = s1.clone();</code>进行深拷贝（Clone）。如果就像上面那样进行浅拷贝，结果是触发所有权规则第二条，“一个值同时只能被一个变量所拥有，或者说一个值只能拥有一个所有者”，因此<code>s1</code>失效了。</p>
+<p><code>&amp;str</code>可以直接浅拷贝。还有可以直接浅拷贝（Copy）的有：</p>
+<ul>
+<li>所有整数类型，比如 <code>u32</code></li>
+<li>布尔类型，<code>bool</code>，它的值是 <code>true</code> 和 <code>false</code></li>
+<li>所有浮点数类型，比如 <code>f64</code></li>
+<li>字符类型，<code>char</code></li>
+<li>元组，当且仅当其包含的类型也都是 <code>Copy</code> 的时候。比如，<code>(i32, i32)</code> 是 <code>Copy</code> 的，但 <code>(i32, String)</code> 就不是</li>
+<li>不可变引用 <code>&amp;T</code> ，例如<a target="_blank" rel="noopener" href="https://course.rs/basic/ownership/ownership.html#转移所有权">转移所有权</a>中的最后一个例子，<strong>但是注意: 可变引用 <code>&amp;mut T</code> 是不可以 Copy的</strong></li>
+</ul>
+<p>对函数来说，将值传递给函数的过程中可能有所有权的转移。比如下面这个例子：</p>
+<pre><code class="lang-rust">fn main() {
+    let s = String::from("hello");  // s 进入作用域
+
+    takes_ownership(s);             // s 的值移动到函数里 ...
+    // println!("在move进函数后继续使用s: {}",s);       // ... 所以到这里不再有效
+
+    let x = 5;                      // x 进入作用域
+
+    makes_copy(x);                  // x 应该移动函数里，
+                                    // 但 i32 是 Copy 的，所以在后面可继续使用 x
+
+} // 这里, x 先移出了作用域，然后是 s。但因为 s 的值已被移走，
+  // 所以不会有特殊操作
+
+fn takes_ownership(some_string: String) { // some_string 进入作用域
+    println!("{}", some_string);
+} // 这里，some_string 移出作用域并调用 `drop` 方法。占用的内存被释放
+
+fn makes_copy(some_integer: i32) { // some_integer 进入作用域
+    println!("{}", some_integer);
+} // 这里，some_integer 移出作用域。不会有特殊操作
+</code></pre>
+<p>所以说，相当于说可以浅拷贝的，函数传参时就直接浅拷贝了。只能深拷贝的，函数传参也不深拷贝，直接拿原来的用，发生了所有权的转移。</p>
+<p>函数的返回值也有所有权。如下例：</p>
+<pre><code class="lang-rust">fn main() {
+    let s1 = gives_ownership();         // gives_ownership 将返回值移给 s1
+}
+
+fn gives_ownership() -&gt; String {             // gives_ownership 将返回值移动给
+                                             // 调用它的函数
+
+    let some_string = String::from("hello"); // some_string 进入作用域.
+
+    some_string                              // 返回 some_string 并移出给调用的函数
+}
+</code></pre>
+<h3 id="引用和借用"><a href="#引用和借用" class="headerlink" title="引用和借用"></a>引用和借用</h3><p>在前面<code>takes_ownership</code>一例中，<code>s</code>的值移动到函数中后，其所有权会转移给函数参数，<code>s</code>就始终无效了。这样会使整个程序变得复杂。引用可以解决这个问题，下面来看Rust的引用。</p>
+<pre><code class="lang-rust">fn main() {
+    let x = 5;
+    let y = &amp;x;
+    assert_eq!(5, x);
+    assert_eq!(5, *y);
+}
+</code></pre>
+<p>此时<code>y</code>的类型是<code>&amp;{integer}</code>。&amp;-引用，*-解引用。</p>
+<p>引用，就是允许使用值，但是不获取所有权。</p>
+<p>这里和C++做个对比，两者比较容易混淆。</p>
+<pre><code class="lang-C++">int a = 10;
+int *pt = &amp;a; // 指针
+int &amp;ref = a // 引用
+
+// 指针传参
+void function(int* param) {
+    *param = 20; // 修改了指针所指向的原始数据
+}
+
+int main() {
+    int x = 10;
+    function(&amp;x);
+    // x 现在是 20
+}
+
+// 引用传参
+void function(int&amp; param) {
+    param = 20; // 直接修改了原始数据
+}
+
+int main() {
+    int x = 10;
+    function(x);
+    // x 现在是 20
+}
+</code></pre>
+<p>Rust中的引用传参是：</p>
+<pre><code class="lang-rust">fn main() {
+    let s1 = String::from("hello");
+
+    let len = calculate_length(&amp;s1);
+
+    println!("The length of '{}' is {}.", s1, len);
+}
+
+fn calculate_length(s: &amp;String) -&gt; usize {
+    s.len()
+}
+</code></pre>
+<p>形式上其实更像C++的指针传参。不过Rust这个引用传参的写法讲实话比C++容易理解一些。</p>
+<p><strong>正如变量默认不可变一样，引用指向的值默认也是不可变的。</strong>需要用可变引用解决此问题。</p>
+<p>可变引用写法如下：</p>
+<pre><code class="lang-rust">fn main() {
+    let mut s = String::from("hello");
+
+    change(&amp;mut s);
+}
+
+fn change(some_string: &amp;mut String) {
+    some_string.push_str(", world");
+}
+</code></pre>
+<p>即首先声明变量是可变变量，并在调用函数时也说明引用是可变引用。</p>
+<blockquote>
+<p>[!IMPORTANT]</p>
+<p><strong>限制一：同一作用域，特定数据只能有一个可变引用。引用作用域的结束位置是其最后一次使用的位置。</strong></p>
+<p><strong>限制二：可变引用与不可变引用不能同时存在。</strong></p>
+</blockquote>
+<p>悬垂引用：悬垂引用是指一个指针（或引用）指向了一个已经被释放的内存区域。例如函数中返回指向某值的指针，函数返回后值释放掉了，但指针还在，这就难办了。</p>
+<p>不可变对象不能有可变引用，但可变对象可以有不可变引用。</p>
+<h2 id="复合类型"><a href="#复合类型" class="headerlink" title="复合类型"></a>复合类型</h2><h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><p>切片：在学Python的时候就学过，切片就是切数组。在Rust中也差不多，严格来说就是允许引用集合中部分连续的元素序列。即如下图所示，<code>world</code>切片就是一个新的指针。</p>
+<pre><code class="lang-rust">let s = String::from("hello world");
+
+let hello = &amp;s[0..5]; // 切片必须是引用
+let world = &amp;s[6..11];
+</code></pre>
+<p><img src="https://pic1.zhimg.com/80/v2-69da917741b2c610732d8526a9cc86f5_1440w.jpg" alt="img" style="zoom: 25%;"></p>
+<p>从而注意一个点：<strong>切片的类型是引用。</strong>特别地，字符串类型<code>String</code>的切片类型为<code>&amp;str</code>，与字符串字面量类型相同。事实上，可以说字符串字面量是切片。<code>String</code> 类型转为 <code>&amp;str</code> 类型取引用即可。</p>
+<p>Rust 中的字符是 Unicode 类型，因此每个字符占据 4 个字节内存空间，但是在字符串中不一样，字符串是 UTF-8 编码，也就是字符串中的字符所占的字节数是变化的，这样有助于大幅降低字符串所占用的内存空间。UTF-8的编码规则如下：</p>
+<ol>
+<li>Unicode码点范围 U+0000 到 U+007F（0-127）的字符采用单字节编码，采用<code>0xxxxxxx</code>的形式，其中x表示码点。</li>
+<li>Unicode码点范围 U+0080 到 U+07FF（128-2047）的字符采用两个字节编码，采用<code>110xxxxx 10xxxxxx</code>的形式。</li>
+<li>Unicode码点范围 U+0800 到 U+FFFF（2048-65535）的字符采用三个字节编码，采用<code>1110xxxx 10xxxxxx 10xxxxxx</code>的形式。</li>
+<li>Unicode码点范围 U+10000 到 U+10FFFF（65536-1114111）的字符采用四个字节编码，采用<code>11110xxx 10xxxxxx 10xxxxxx 10xxxxxx</code>的形式。</li>
+</ol>
+<p><code>String</code>不能索引，即如下操作非法。</p>
+<pre><code class="lang-rust">let s1 = String::from("hello");
+let h = s1[0];
+</code></pre>
+<p>字符串不能索引的主要原因是采用UTF-8编码。如果按字节索引，对于一个汉字（三字节编码）取到的就只是中间的一个字节，很莫名其妙的。同时在对字符串切片时也要注意这点，不要切到字节中间去了。</p>
+<h3 id="元组"><a href="#元组" class="headerlink" title="元组"></a>元组</h3><pre><code class="lang-rust">let tup: (i32, f64, u8) = (500, 6.4, 1);
+let a = tup.0; // 索引
+</code></pre>
+<p>元组的长度是固定的，元组中元素的顺序也是固定的。</p>
+<h3 id="结构体"><a href="#结构体" class="headerlink" title="结构体"></a>结构体</h3><p>其实有一个问题，在学C++的时候有说struct和class差不多。但为什么Rust作为一门二十一世纪一十年代才出现的语言，仍要保留struct呢。</p>
+<pre><code class="lang-rust">struct User {
+    active: bool,
+    username: String,
+    email: String,
+    sign_in_count: u64,
+} // 定义
+
+let user1 = User {
+    email: String::from("someone@example.com"),
+    username: String::from("someusername123"),
+    active: true,
+    sign_in_count: 1,
+}; // 创建实例
+
+let user2 = User {
+    active: user1.active,
+    username: user1.username,
+    email: String::from("another@example.com"),
+    sign_in_count: user1.sign_in_count,
+}; // 根据已有的实例创建新的实例
+
+let user2 = User {
+    email: String::from("another@example.com"),
+    ..user1
+}; // 或者更快的写法，只详写要更新的部分
+
+// 在此间存在所有权转移。user1 的部分字段所有权被转移到 user2 中：username 字段发生了所有权转移，作为结果，user1 无法再被使用。注意也只有username字段发生了所有权转移，active和sign_in_count这种能Copy的直接都Copy了。并且user1中除了username以外的字段都可以正常使用。
+
+
+// 结构体必须要有名称，但是结构体的字段可以没有名称，这种结构体长得很像元组，因此被称为元组结构体
+struct Color(i32, i32, i32);
+struct Point(i32, i32, i32);
+
+let black = Color(0, 0, 0);
+let origin = Point(0, 0, 0);
+</code></pre>
+<p>若想直接打印结构体，需要在代码开头加上<code>#[derive(Debug)]</code>，或者使用<code>dbg!</code>打印。它会拿走表达式的所有权，然后打印出相应的文件名、行号等 debug 信息，当然还有我们需要的表达式的求值结果。除此之外，它最终还会把表达式值的所有权返回。</p>
+<h3 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h3><pre><code class="lang-rust">enum PokerSuit {
+  Clubs,
+  Spades,
+  Diamonds,
+  Hearts,
+}
+
+let heart = PokerSuit::Hearts;
+let diamond = PokerSuit::Diamonds;
+
+enum PokerCard {
+    Clubs(u8),
+    Spades(u8),
+    Diamonds(u8),
+    Hearts(u8),
+}
+
+fn main() {
+   let c1 = PokerCard::Spades(5);
+   let c2 = PokerCard::Diamonds(13);
+} // 枚举值可以带一个值
+</code></pre>
+<p><code>Option</code>枚举用于处理空值：Option枚举是一种特殊的枚举，定义如下：</p>
+<pre><code class="lang-rust">enum Option&lt;T&gt; {
+    Some(T),
+    None,
+}
+</code></pre>
+<p><code>Option</code> 枚举包含两个成员，一个成员表示含有值：<code>Some(T)</code>, 另一个表示没有值：<code>None</code>。这样做也是为了安全考虑，即为了避免null引发的错误（前几天才碰到过，函数返回值为null然后直接接受并访存导致segmentation fault）。</p>
+<p>用法如下：</p>
+<pre><code class="lang-rust">let some_number = Some(5);
+let some_string = Some("a string");
+
+let absent_number: Option&lt;i32&gt; = None; // 将一个变量声明成None需要显式声明其类型
+</code></pre>
+<p><code>Option</code>由于已被包含进标准库中，所以不写成<code>Option::Some</code>也是没问题的。如果使用 <code>None</code> 而不是 <code>Some</code>，需要告诉 Rust <code>Option&lt;T&gt;</code> 是什么类型的，因为编译器只通过 <code>None</code> 值无法推断出 <code>Some</code> 成员保存的值的类型。</p>
+<p><code>Option&lt;T&gt;</code> 相比null的好处：<code>Option&lt;T&gt;</code>和<code>T</code>之间不能直接作运算，所以就避免了直接使用可能为<code>None</code>的变量的情况。</p>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>Rust中的数组分两种</p>
+<pre><code class="lang-rust">let a: [i32; 5] = [1, 2, 3, 4, 5];
+let a: [i32; 5] = [3; 5]; // 一个值重复N次
+</code></pre>
+<p>当数组元素为非基本类型是，不能用<code>[a;b]</code>的语法，因为根据所有权的知识，<code>[a;b]</code>中的元素都是copy出来的，但是非基本类型不能copy，所以就不能用了。</p>
+<pre><code class="lang-rust">let array = [String::from("rust is good!"); 8]; // 这么写不对
+let array: [String; 8] = std::array::from_fn(|_i| String::from("rust is good!")); // 正确写法是这样，长得有点奇怪
+</code></pre>
+<pre><code class="lang-rust">let names = [String::from("Sunfei"), "Sunface".to_string()];
+
+// `get` 返回 `Option&lt;T&gt;` 类型，因此它的使用非常安全
+let name0 = names.get(0).unwrap();
+
+// 但是下标索引就存在越界的风险了
+let _name1 = &amp;names[2];
+</code></pre>
+<h2 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a>流程控制</h2><pre><code class="lang-rust">fn main() {
+    let names = [String::from("liming"),String::from("hanmeimei")];
+      // names中的元素不能Copy，所以一定要加引用，否则所有权转移了`println!("{:?}", names);`就报错了
+    for name in &amp;names {
+        // do something with name...
+    }
+
+    println!("{:?}", names);
+
+    let numbers = [1, 2, 3];
+    // numbers中的元素实现了 Copy，因此无需转移所有权
+    for n in numbers {
+        // do something with name...
+    }
+
+    println!("{:?}", numbers);
+}
+</code></pre>
+<p>当有多层循环时，可以使用 <code>continue</code> 或 <code>break</code> 来控制外层的循环。要实现这一点，外部的循环必须拥有一个标签 <code>'label</code>, 然后在 <code>break</code> 或 <code>continue</code> 时指定该标签</p>
+<pre><code class="lang-rust">fn main() {
+    let mut count = 0;
+    'outer: loop {
+        'inner1: loop {
+            if count &gt;= 20 {
+                // 这只会跳出 inner1 循环
+                break 'inner1; // 这里使用 `break` 也是一样的
+            }
+            count += 2;
+        }
+
+        count += 5;
+
+        'inner2: loop {
+            if count &gt;= 30 {
+                break 'outer; // 这里就可以直接跳出outer，不用一层一层再去break了，有点像goto了，但比C语言严格一些
+            }
+
+            continue 'outer;
+        }
+    }
+
+    assert!(count == 30)
+}
+</code></pre>
+<h2 id="模式匹配"><a href="#模式匹配" class="headerlink" title="模式匹配"></a>模式匹配</h2><h3 id="match-与-if-let"><a href="#match-与-if-let" class="headerlink" title="match 与 if let"></a>match 与 if let</h3><pre><code class="lang-rust">match target {
+    模式1 =&gt; 表达式1,
+    模式2 =&gt; {
+        语句1;
+        语句2;
+        表达式2
+    },
+    _ =&gt; 表达式3
+}
+</code></pre>
+<p>最后结果是个表达式，所以可以用作赋值、返回值等。<code>match</code> 的每一个分支都必须是一个表达式，且所有分支的表达式最终返回值的类型必须相同。 <code>match</code> 的匹配必须穷尽所有情况。</p>
+<pre><code class="lang-rust">let v = Some(3u8);
+match v {
+    Some(3) =&gt; println!("three"),
+    _ =&gt; (),
+} // 这个写得太繁琐了
+
+if let Some(3) = v {
+    println!("three");
+} // 如果只是想针对性地处理一种情况，可用if let。但其他所有情况还是都用match
+</code></pre>
+<pre><code class="lang-rust">enum MyEnum {
+    Foo,
+    Bar
+}
+
+fn main() {
+    let v = vec![MyEnum::Foo,MyEnum::Bar,MyEnum::Foo];
+}
+
+v.iter().filter(|x| matches!(x, MyEnum::Foo)); // 用matches!进行筛选，只保留类型是 MyEnum::Foo 的元素
+</code></pre>
+<p><code>match</code>可以用来解构Option。举例如下：</p>
+<pre><code class="lang-rust">fn plus_one(x: Option&lt;i32&gt;) -&gt; Option&lt;i32&gt; {
+    match x {
+        None =&gt; None,
+        Some(i) =&gt; Some(i + 1),
+    }
+}
+</code></pre>
+<p><code>while let</code>：如果模式匹配就一直循环。例如下面的例子：</p>
+<pre><code class="lang-rust">// Vec是动态数组
+let mut stack = Vec::new();
+
+// 向数组尾部插入元素
+stack.push(1);
+stack.push(2);
+stack.push(3);
+
+// stack.pop从数组尾部弹出元素
+while let Some(top) = stack.pop() {
+    println!("{}", top);
+}
+</code></pre>
+<p>可驳模式匹配和不可驳模式匹配：可驳模式匹配允许match中遗漏情况，如<code>if let</code>，类似 <code>let</code> , <code>for</code>和<code>match</code> 都必须要求完全覆盖匹配，才能通过编译，即不可驳模式匹配。</p>
+<p>例如，不能写成<code>let Some(x) = Some(10);</code>，因为这样漏了<code>None</code>，如果想这么写，应该写成<code>if let Some(x) = Some(10) {}</code></p>
+<h3 id="绑定"><a href="#绑定" class="headerlink" title="@绑定"></a>@绑定</h3><pre><code class="lang-rust">enum Message {
+    Hello { id: i32 },
+}
+
+let msg = Message::Hello { id: 5 };
+
+match msg {
+    Message::Hello { id: id_variable @ 3..=7 } =&gt; {
+        println!("Found an id in range: {}", id_variable)
+    },
+    Message::Hello { id: 10..=12 } =&gt; {
+        println!("Found an id in another range")
+    },
+    Message::Hello { id } =&gt; {
+        println!("Found some other id: {}", id)
+    },
+}
+</code></pre>
+<p>上面例子中，测试了 <code>Message::Hello</code> 的 <code>id</code> 字段是否位于 <code>3..=7</code> 范围内，同时将其值绑定到 <code>id_variable</code> 变量中以便此分支中相关的代码可以使用它。用到的就是这个<code>@</code>。</p>
+<p>使用 <code>@</code> 还可以在绑定新变量的同时，对目标进行解构：</p>
+<pre><code class="lang-rust">#[derive(Debug)]
+struct Point {
+    x: i32,
+    y: i32,
+}
+
+fn main() {
+    // 绑定新变量 `p`，同时对 `Point` 进行解构
+    let p @ Point {x: px, y: py } = Point {x: 10, y: 23};
+    println!("x: {}, y: {}", px, py);
+    println!("{:?}", p);
+
+
+    let pnt = Point {x: 10, y: 5};
+    if let p @ Point {x: 10, y} = pnt {
+        println!("x is 10 and y is {} in {:?}", y, p); 
+    } else {
+        println!("x was not 10 :(");
+    }
+}
+</code></pre>
+<pre><code class="lang-rust">fn main() {
+    match 1 {
+        num @ (1 | 2) =&gt; { // 写成`num @ 1 | 2`就报错了，因为没绑定全
+            println!("{}", num);
+        }
+        _ =&gt; {}
+    }
+}
+</code></pre>
+<p>最后再注意一个点：</p>
+<pre><code class="lang-rust">fn main() {
+    let mut v = String::from("hello,");
+    let r = &amp;mut v;
+
+    match r {
+       ①&amp;mut value =&gt; value.push_str(" world!")  // 这行是错的
+       ②value =&gt; value.push_str(" world!")   // 这行是对的
+       ③&amp;mut ref mut value =&gt; value.push_str(" world!")  // 这样也可以
+    }
+
+      // 若用②，这里会报错，因为match已经拿走r的值的所有权
+      // 若用③，这里不会报错
+    println!("{}", r);
+}
+</code></pre>
+<p>用①时，<code>value</code>的类型是<code>String</code>，是不可变的，所以报错。对应地，如果前面是<code>let mut v = 1;</code>，是不会报错的。</p>
+<p>用②时，虽然是对的，但<code>r</code>的值的所有权转移给了<code>match</code>。出<code>match</code>后<code>r</code>就用不了了。</p>
+<p>用③时，首先需要解释一下<code>&amp;mut ref mut value</code>是什么。如果我们把<code>&amp;mut ref mut value</code>看作<code>&amp;mut X</code>，那么按照上面的思路：<code>X</code>能从<code>r</code>中匹配到<code>v</code>。如果表达为let模式匹配：<code>let ref mut value : &amp;mut String = v</code>。<code>ref</code>的作用是使<code>value</code>作为指针指向字符串<code>v</code>，加上<code>mut</code>使其可变。因此类型为<code>&amp;mut String</code>。这里的<code>value</code>其实是通过模式匹配得到的对原始数据<code>v</code>的可变引用<code>r</code>的<strong>再借用</strong>。这好像就有些超纲了（w）。</p>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>总体印象：Rust类中的成员和方法是分离的。</p>
+<p><img src="https://p.ipic.vip/8rkdda.png" alt="img" style="zoom:50%;"></p>
+<pre><code class="lang-rust">struct Circle {
+    x: f64,
+    y: f64,
+    radius: f64,
+}
+
+impl Circle {
+    // new是Circle的关联函数，因为它的第一个参数不是self，且new并不是关键字
+    // 这种方法往往用于初始化当前结构体的实例
+    fn new(x: f64, y: f64, radius: f64) -&gt; Circle {
+        Circle {
+            x: x,
+            y: y,
+            radius: radius,
+        }
+    }
+      // fn new(x: f64, y: f64, radius: f64) -&gt; Self {
+    //     Self {
+    //         x: x,
+    //         y: y,
+    //         radius: radius,
+    //     }
+    // }
+    // 或者改成用Self关键字
+
+    // Circle的方法，&amp;self表示借用当前的Circle结构体
+    fn area(&amp;self) -&gt; f64 {
+        std::f64::consts::PI * (self.radius * self.radius)
+    }
+}
+</code></pre>
+<p>对这段代码的注解：</p>
+<p><code>new</code>方法叫做关联函数，因为不带<code>&amp;self</code>，只能用<code>A::B()</code>的形式调用，例如<code>String::from()</code>，还有这里能用<code>Circle::new()</code>来构建新的<code>Circle</code>实例。</p>
+<p><code>self</code> 是 <code>self: Self</code> 的语法糖。<code>&amp;self</code> 是 <code>self: &amp;Self</code> 的语法糖。<code>&amp;mut self</code> 是 <code>self: &amp;mut Self</code> 的语法糖。</p>
+<pre><code class="lang-rust">#![allow(unused)]
+enum Message {
+    Quit,
+    Move { x: i32, y: i32 },
+    Write(String),
+    ChangeColor(i32, i32, i32),
+}
+
+impl Message {
+    fn call(&amp;self) {
+        match self {
+            Message::Quit =&gt; println!("Quit"),
+            Message::Move { x, y } =&gt; println!("Move x: {}, y: {}", x, y),
+            Message::Write(text) =&gt; println!("Write: {}", text),
+            Message::ChangeColor(r, g, b) =&gt; println!("ChangeColor r: {}, g: {}, b: {}", r, g, b),
+        }
+    }
+}
+
+fn main() {
+    let m = Message::Write(String::from("hello"));
+    m.call();
+
+}
+</code></pre>
+<p>如上所示，还可以对枚举定义方法。</p>
+<h2 id="泛型与特征"><a href="#泛型与特征" class="headerlink" title="泛型与特征"></a>泛型与特征</h2><h3 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h3><p>根据C++中的经验，泛型应该写成这样：<code>fn add&lt;T&gt;(a: T, b: T) -&gt; T{}</code>。但这样子有问题。因为并不是所有类型都能进行相加操作，故需要对<code>T</code>加以限制，写成<code>fn add&lt;T: std::ops::Add&lt;Output = T&gt;&gt;(a:T, b:T) -&gt; T {}</code>。</p>
+<p>结构体泛型：<code>struct Point&lt;T,U&gt; {x: T, y: U,}</code>。这是保证<code>x</code> 和 <code>y</code> 既能类型相同，又能类型不同。</p>
+<p>枚举泛型：<code>Option</code>本身是枚举泛型：<code>enum Option&lt;T&gt; {Some(T), None,}</code>。还举一例：<code>enum Result&lt;T, E&gt; {Ok(T), Err(E),}</code></p>
+<p>方法泛型：</p>
+<pre><code class="lang-rust">struct Point&lt;T&gt; {
+    x: T,
+    y: T,
+}
+
+impl&lt;T&gt; Point&lt;T&gt; {
+    fn x(&amp;self) -&gt; &amp;T {
+        &amp;self.x
+    }
+}
+
+fn main() {
+    let p = Point { x: 5, y: 10 };
+
+    println!("p.x = {}", p.x());
+}
+</code></pre>
+<p>使用泛型参数前，依然需要提前声明：<code>impl&lt;T&gt;</code>，只有提前声明了，我们才能在<code>Point&lt;T&gt;</code>中使用它，这样 Rust 就知道 <code>Point</code> 的尖括号中的类型是泛型而不是具体类型。需要注意的是，这里的 <code>Point&lt;T&gt;</code> 不再是泛型声明，而是一个完整的结构体类型，因为我们定义的结构体就是 <code>Point&lt;T&gt;</code> 而不再是 <code>Point</code>。</p>
+<p>再举一例：</p>
+<pre><code class="lang-rust">struct Point&lt;T, U&gt; {
+    x: T,
+    y: U,
+}
+
+impl&lt;T, U&gt; Point&lt;T, U&gt; {
+    fn mixup&lt;V, W&gt;(self, p2: Point&lt;V, W&gt;) -&gt; Point&lt;T, W&gt;{ // 注意这行泛型的字母
+        Point{x: self.x, y: p2.y}
+    }
+}
+
+fn main() {
+    let p1 = Point { x: 5, y: 10 };
+    let p2 = Point { x: "Hello", y: '中'};
+
+    let p3 = p1.mixup(p2);
+
+    assert_eq!(p3.x, 5);
+    assert_eq!(p3.y, '中');
+}
+</code></pre>
+<p>const泛型：</p>
+<pre><code class="lang-rust">fn display_array&lt;T: std::fmt::Debug, const N: usize&gt;(arr: [T; N]) {
+    println!("{:?}", arr);
+}
+fn main() {
+    let arr: [i32; 3] = [1, 2, 3];
+    display_array(arr);
+
+    let arr: [i32; 2] = [1, 2];
+    display_array(arr);
+}
+</code></pre>
+<p>const泛型主要解决传数组的问题。在Rust中，不同长度的数组类型不同，想要让同一个函数接受不同长度的数组就要用泛型。此时就要用const泛型来规定长度也是泛型。</p>
+<h3 id="特征"><a href="#特征" class="headerlink" title="特征"></a>特征</h3><pre><code class="lang-rust">pub trait Summary {
+    fn summarize(&amp;self) -&gt; String;
+}
+pub struct Post {
+    pub title: String, // 标题
+    pub author: String, // 作者
+    pub content: String, // 内容
+}
+
+impl Summary for Post {
+    fn summarize(&amp;self) -&gt; String {
+        format!("文章{}, 作者是{}", self.title, self.author)
+    }
+}
+
+pub struct Weibo {
+    pub username: String,
+    pub content: String
+}
+
+impl Summary for Weibo {
+    fn summarize(&amp;self) -&gt; String {
+        format!("{}发表了微博{}", self.username, self.content)
+    }
+}
+
+fn main() {
+    let post = Post{title: "Rust语言简介".to_string(),author: "Sunface".to_string(), content: "Rust棒极了!".to_string()};
+    let weibo = Weibo{username: "sunface".to_string(),content: "好像微博没Tweet好用".to_string()};
+
+    println!("{}",post.summarize());
+    println!("{}",weibo.summarize());
+}
+</code></pre>
+<p>在Java里面这个好像叫“接口”，但我也没怎么学过Java也不太记得了。</p>
+<p>就如上面的代码所示，首先定义一个特征<code>Summary</code>，然后分别在<code>Post</code>和<code>Weibo</code>两个结构体中实现之，然后就可以调用了。</p>
+<pre><code class="lang-rust">pub fn notify(item: &amp;impl Summary) {
+    println!("Breaking news! {}", item.summarize());
+}
+</code></pre>
+<p>上面这段代码传入的参数的类型是<code>impl Summary</code>，意思是 <strong>实现了<code>Summary</code>特征</strong> 的 <code>item</code> 参数。使用方法如<code>notify(&amp; weibo);</code>。</p>
+<p>上面这种写法是<code>pub fn notify&lt;T: Summary&gt;(item: &amp;T)</code>的语法糖。事实上，前面泛型中举的例子就是这样写的：<code>fn add&lt;T: std::ops::Add&lt;Output = T&gt;&gt;(a:T, b:T) -&gt; T {}</code>这种完整写法的好处是可以在传多个参数时控制参数类型相同，如：<code>pub fn notify&lt;T: Summary&gt;(item1: &amp;T, item2: &amp;T)</code>。</p>
+<p>此外，还可以控制多重约束，例如：<code>pub fn notify(item: &amp;(impl Summary + Display)) {}</code>或<code>pub fn notify&lt;T: Summary + Display&gt;(item: &amp;T) {}</code>。</p>
+<p>可以通过 <code>impl Trait</code> 来说明一个函数返回了一个类型，该类型实现了某个特征：</p>
+<pre><code class="lang-rust">fn returns_summarizable() -&gt; impl Summary {
+    Weibo {
+        username: String::from("sunface"),
+        content: String::from(
+            "m1 max太厉害了，电脑再也不会卡",
+        )
+    }
+}
+</code></pre>
+<p>但是这种返回值方式有一个很大的限制：只能有一个具体的类型。如果想要实现返回不同的类型，需要使用下一章节中的特征对象。</p>
+<pre><code class="lang-rust">use std::fmt::Display;
+
+struct Pair&lt;T&gt; {
+    x: T,
+    y: T,
+}
+
+impl&lt;T&gt; Pair&lt;T&gt; {
+    fn new(x: T, y: T) -&gt; Self {
+        Self {
+            x,
+            y,
+        }
+    }
+}
+
+impl&lt;T: Display + PartialOrd&gt; Pair&lt;T&gt; {
+    fn cmp_display(&amp;self) {
+        if self.x &gt;= self.y {
+            println!("The largest member is x = {}", self.x);
+        } else {
+            println!("The largest member is y = {}", self.y);
+        }
+    }
+}
+</code></pre>
+<p>特征约束，可以在指定类型 + 指定特征的条件下去实现方法。例如上面的<code>cmp_display</code> 方法，并不是所有的 <code>Pair&lt;T&gt;</code> 结构体对象都可以拥有，只有 <code>T</code> 同时实现了 <code>Display + PartialOrd</code> 的 <code>Pair&lt;T&gt;</code> 才可以拥有此方法。 </p>
+<p><strong>也可以有条件地实现特征</strong>。假设我们有一个<code>Printable</code>特征，我们只想为实现了<code>std::fmt::Display</code>特征的类型实现这个<code>Printable</code>特征。这可以通过如下方式完成：</p>
+<pre><code class="lang-rust">trait Printable {
+    fn print(&amp;self);
+}
+
+impl&lt;T: std::fmt::Display&gt; Printable for T {
+    fn print(&amp;self) {
+        println!("{}", self);
+    }
+}
+</code></pre>
+<p>在这个示例中，<code>Printable</code>特征会被有条件地实现于所有实现了<code>std::fmt::Display</code>特征的类型上。这意味着任何满足<code>Display</code>约束的类型都自动成为<code>Printable</code>，可以调用<code>.print()</code>方法。</p>
+<p><u><em>泛型和特征还有一堆内容没看，但这部分实在太抽象了，先跳了……</em></u></p>
+<h2 id="Vector和Hashmap"><a href="#Vector和Hashmap" class="headerlink" title="Vector和Hashmap"></a>Vector和Hashmap</h2><p>老朋友了，我建议用的时候查表。</p>
+<h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><p>编译器使用三条消除规则来确定哪些场景不需要显式地去标注生命周期。其中第一条规则应用在输入生命周期上，第二、三条应用在输出生命周期上。若编译器发现三条规则都不适用时，就会报错，提示你需要手动标注生命周期。</p>
+<ol>
+<li><p><strong>每一个引用参数都会获得独自的生命周期</strong></p>
+<p>例如一个引用参数的函数就有一个生命周期标注: <code>fn foo&lt;'a&gt;(x: &amp;'a i32)</code>，两个引用参数的有两个生命周期标注:<code>fn foo&lt;'a, 'b&gt;(x: &amp;'a i32, y: &amp;'b i32)</code>, 依此类推。</p>
+</li>
+<li><p><strong>若只有一个输入生命周期(函数参数中只有一个引用类型)，那么该生命周期会被赋给所有的输出生命周期</strong>，也就是所有返回值的生命周期都等于该输入生命周期</p>
+<p>例如函数 <code>fn foo(x: &amp;i32) -&gt; &amp;i32</code>，<code>x</code> 参数的生命周期会被自动赋给返回值 <code>&amp;i32</code>，因此该函数等同于 <code>fn foo&lt;'a&gt;(x: &amp;'a i32) -&gt; &amp;'a i32</code></p>
+</li>
+<li><p><strong>若存在多个输入生命周期，且其中一个是 <code>&amp;self</code> 或 <code>&amp;mut self</code>，则 <code>&amp;self</code> 的生命周期被赋给所有的输出生命周期</strong></p>
+<p>拥有 <code>&amp;self</code> 形式的参数，说明该函数是一个 <code>方法</code>，该规则让方法的使用便利度大幅提升。</p>
+</li>
+</ol>
+
+
+<!--<a href="https://asparticguan.github.io/blog/Rust%E6%9C%AD%E8%AE%B0.html#disqus_thread" class="article-comment-link">Comments</a>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = ''; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+-->
+<div style="display:none">
+<script src="http://s4.cnzz.com/stat.php?id=&web_id=" language="JavaScript"></script>script>
+</div>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+</body>
+</html>

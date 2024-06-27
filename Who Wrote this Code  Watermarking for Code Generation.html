@@ -1,0 +1,249 @@
+<html>
+<head>
+	
+	<title>Who Wrote this Code? Watermarking for Code Generation</title>
+	<meta name="keywords" content="fzb.me,冯宗宝,冯宗宝的blog" />
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    
+	   <link href="/blog/css/main.css?v=3" rel="stylesheet" type="text/css" />
+    
+        
+<script src="/blog/js/util.js"></script>
+
+        <script>
+            if(isMobile()) {
+                loadjscssfile('../css/mobile.css', 'css');
+            } else {
+                loadjscssfile('../css/desktop.css', 'css');
+            }
+        </script> 
+    
+
+    <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Atom feed">
+
+    
+	<link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=3"/>
+    
+    
+
+<meta name="generator" content="Hexo 6.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+<body>
+
+
+<h2 class="title">Who Wrote this Code? Watermarking for Code Generation</h2>
+<!--
+<div style="text-align:center;margin-top: -10px;">
+<div class="article-category">
+发表于2019年11月15日
+
+
+
+
+ </div>
+-->
+</div>
+
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Who-Wrote-this-Code-Watermarking-for-Code-Generation"><span class="toc-text">Who Wrote this Code? Watermarking for Code Generation</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Abstract"><span class="toc-text">Abstract</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Related-Work"><span class="toc-text">Related Work</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Method"><span class="toc-text">Method</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Preliminaries"><span class="toc-text">Preliminaries</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Motivation"><span class="toc-text">Motivation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Selective-Watermarking-with-Entropy-Threshold-SWEET"><span class="toc-text">Selective Watermarking with Entropy Threshold (SWEET)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Experiments"><span class="toc-text">Experiments</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Baselines"><span class="toc-text">Baselines</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Metrics"><span class="toc-text">Metrics</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hyperparameters"><span class="toc-text">Hyperparameters</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Results-and-Analysis"><span class="toc-text">Results and Analysis</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Main-Results"><span class="toc-text">Main Results</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Further-Analysis"><span class="toc-text">Further Analysis</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Case-Study-Breakdown-of-DetectGPT"><span class="toc-text">Case Study: Breakdown of DetectGPT</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Limitations"><span class="toc-text">Limitations</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conclusion"><span class="toc-text">Conclusion</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol>
+<h1 id="Who-Wrote-this-Code-Watermarking-for-Code-Generation"><a href="#Who-Wrote-this-Code-Watermarking-for-Code-Generation" class="headerlink" title="Who Wrote this Code? Watermarking for Code Generation"></a>Who Wrote this Code? Watermarking for Code Generation</h1><p>韩国人速度真快😭😭😭</p>
+<h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>大型代码语言模型最近展示了在生成可执行代码方面的卓越性能。然而，这种快速进步伴随着许多法律和道德问题，如代码许可问题、代码抄袭和恶意软件生成，使得为机器生成的代码添加水印成为一个非常及时的问题。尽管存在迫切需求，但我们发现现有的用于LLM（Large Language Models）的水印和机器生成文本检测方法在处理代码生成任务时无法正常工作。因此，在这项工作中，我们提出了一种新的水印方法SWEET，在为机器生成的代码添加水印时显著改进了先前的方法。我们提出的方法选择性地对熵高于定义阈值的令牌应用水印。对于代码生成基准测试实验表明，与先前最先进LLM水印方法产生的代码相比，我们带有水印标记的代码具有更好质量。此外，我们提出的水印方法在机器生成码检测任务上也优于DetectGPT。</p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>最近，Kirchenbauer等人（2023年）提出了一种水印技术，我们称之为“香草水印”，它在从语言模型生成的标记中嵌入水印。对于每个步骤生成的标记，该方法随机将整个词汇表分成两组（例如，红色组用于避免的标记和绿色组用于偏好的标记）。绿色组的标记通过固定数量增加逻辑值。这样，在每个时间步长上，模型往往更倾向于生成来自绿色组的标记。在检测阶段，该方法计算绿色组标记的数量，并检查该数字是否具有统计学意义以得出结论：模型输出是在不知道绿-红规则下生成的。虽然前述方法已经在文本检测领域展示了强大性能，但它们在代码检测任务中尚未被探索应用。</p>
+<p>我们对代码检测问题进行了大量实验，并观察到这些方法存在严重的退化现象。特别是，我们发现 Kirchenbauer 等人（2023）的两种失败模式是由于生成代码中极低熵性质所导致的。也就是说，先前生成的代码标记对模型来说非常熟悉，以至于它几乎可以确定地生成下一个标记。如果这些唯一的“黄金”标记属于红色组，则会出现以下情况：(i) 如果从绿色组中抽样其他标记（参见图1(a)），则模型输出的质量可能会严重受损；或者 (ii) 如果黄金标记的逻辑值仍然高于绿色组中其他标记（参见图1(b)），则检测机器生成代码将变得困难。</p>
+<p>为了解决这些失败模式，我们提出了一种基于熵阈值选择性水印技术（SWEET）用于 Code LLMs （和 LLMs）。与将绿-红规则应用于代码输出中每个单个标记不同，我们只将该规则应用于比给定阈值更高熵度的标记上。这种选择性水印方法不会将红色组规则应用到黄金标记上，从而避免它们落入红色组，因此上述失败模式将不会发生。</p>
+<p><img src="https://p.ipic.vip/q6ffv1.png" alt="image-20230816224844801" style="zoom: 50%;"></p>
+<p>基于我们对 LLaMA-13B（Touvron 等人，2023）在代码补全基准测试 HumanEval（Chen 等人，2021）和 MBPP（Austin 等人，2021）上的实验，我们可以总结出以下贡献：</p>
+<p>• 我们是第一个识别和制定LLM生成的代码水印问题的团队。<br>• 我们提出了一种简单而有效的方法，称为选择性水印，与之前的普通水印方法（Kirchenbauer等人，2023年）相比，显著提高了代码执行通过率。<br>• 与现有基线相比，我们的方法还显示出更高的机器生成代码检测准确性。</p>
+<h2 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h2><h2 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h2><p>我们解决了之前的普通数字水印方法Kirchenbauer等人（2023年）在嵌入和检测水印时出现的问题，特别是在代码生成的情况下。我们提出了一种新的数字水印方法SWEET，可以有选择地对熵高的令牌进行数字水印。</p>
+<h3 id="Preliminaries"><a href="#Preliminaries" class="headerlink" title="Preliminaries"></a>Preliminaries</h3><p>关于Kirchenbauer等人（2023年）的论文建议看这个速成：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/648576782">大模型水印技术：判断文本是不是LLM生成的 - 知乎 (zhihu.com)</a></p>
+<h3 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h3><p>虽然香草水印技术已经显示出检测LLM生成的文本的可能性，但我们认为该算法可能容易受到包含低熵令牌的文本（特别是代码）攻击，从两个方面进行了讨论：1）检测带有水印文本的性能；2）生成文本的质量。</p>
+<p><strong>低熵token避免被水印标记</strong> 当我们考虑图1（b）时，排名第一的令牌True（已列入红名单）持有最大概率。在这种情况下，水印标记无法正常工作，因为红名单中的True几乎是确定性生成的，而不是绿色列表中的False。因此，在大多数情况下，代码比纯文本少得多地被加上了水印标记，使其更难以检测。</p>
+<p><strong>水印会导致性能下降</strong> 另一方面，当我们考虑图1（a）描述的成功发出绿色标记False的情况时，我们可以看到代码将立即无法正常执行。尽管这种情况是一个相当极端的例子，但这仍然是我们在对代码进行水印处理后看到显着代码性能下降的主要原因。</p>
+<h3 id="Selective-Watermarking-with-Entropy-Threshold-SWEET"><a href="#Selective-Watermarking-with-Entropy-Threshold-SWEET" class="headerlink" title="Selective Watermarking with Entropy Threshold (SWEET)"></a>Selective Watermarking with Entropy Threshold (SWEET)</h3><p>如上所述的Motivation小节中所描述的，盲目地应用普通数字水印技术于code LLMs将会导致imperceptibility（不可感知性）或者代码检测能力方面出现问题。虽然减少普通数字水印技术中的<mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.023ex;" xmlns="http://www.w3.org/2000/svg" width="1.005ex" height="1.645ex" role="img" focusable="false" viewBox="0 -717 444 727"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D6FF" d="M195 609Q195 656 227 686T302 717Q319 716 351 709T407 697T433 690Q451 682 451 662Q451 644 438 628T403 612Q382 612 348 641T288 671T249 657T235 628Q235 584 334 463Q401 379 401 292Q401 169 340 80T205 -10H198Q127 -10 83 36T36 153Q36 286 151 382Q191 413 252 434Q252 435 245 449T230 481T214 521T201 566T195 609ZM112 130Q112 83 136 55T204 27Q233 27 256 51T291 111T309 178T316 232Q316 267 309 298T295 344T269 400L259 396Q215 381 183 342T137 256T118 179T112 130Z"></path></g></g></g></svg></mjx-container>值也可以提高不可感知性，但这也会降低检测能力，因此需要权衡取舍。SWEET通过检测更多可互换标记并将其替换为水印来改善这种权衡。</p>
+<p><img src="https://p.ipic.vip/3kavfy.png" alt="image-20230820203914633" style="zoom:50%;"></p>
+<p>上图为SWEET算法，其中算式如下：</p>
+<p><img src="https://p.ipic.vip/01g9oc.png" alt="image-20230820204324218" style="zoom:50%;"></p>
+<p>其实和Kirchenbauer等人（2023年）没有多大区别，只不过加了个阈值，只对熵值高于<mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="17.537ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 7751.2 1000"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D43B" d="M228 637Q194 637 192 641Q191 643 191 649Q191 673 202 682Q204 683 219 683Q260 681 355 681Q389 681 418 681T463 682T483 682Q499 682 499 672Q499 670 497 658Q492 641 487 638H485Q483 638 480 638T473 638T464 637T455 637Q416 636 405 634T387 623Q384 619 355 500Q348 474 340 442T328 395L324 380Q324 378 469 378H614L615 381Q615 384 646 504Q674 619 674 627T617 637Q594 637 587 639T580 648Q580 650 582 660Q586 677 588 679T604 682Q609 682 646 681T740 680Q802 680 835 681T871 682Q888 682 888 672Q888 645 876 638H874Q872 638 869 638T862 638T853 637T844 637Q805 636 794 634T776 623Q773 618 704 340T634 58Q634 51 638 51Q646 48 692 46H723Q729 38 729 37T726 19Q722 6 716 0H701Q664 2 567 2Q533 2 504 2T458 2T437 1Q420 1 420 10Q420 15 423 24Q428 43 433 45Q437 46 448 46H454Q481 46 514 49Q520 50 522 50T528 55T534 64T540 82T547 110T558 153Q565 181 569 198Q602 330 602 331T457 332H312L279 197Q245 63 245 58Q245 51 253 49T303 46H334Q340 38 340 37T337 19Q333 6 327 0H312Q275 2 178 2Q144 2 115 2T69 2T48 1Q31 1 31 10Q31 12 34 24Q39 43 44 45Q48 46 59 46H65Q92 46 125 49Q139 52 144 61Q147 65 216 339T285 628Q285 635 228 637Z"></path></g><g data-mml-node="mo" transform="translate(888,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mi" transform="translate(1277,0)"><path data-c="1D43B" d="M228 637Q194 637 192 641Q191 643 191 649Q191 673 202 682Q204 683 219 683Q260 681 355 681Q389 681 418 681T463 682T483 682Q499 682 499 672Q499 670 497 658Q492 641 487 638H485Q483 638 480 638T473 638T464 637T455 637Q416 636 405 634T387 623Q384 619 355 500Q348 474 340 442T328 395L324 380Q324 378 469 378H614L615 381Q615 384 646 504Q674 619 674 627T617 637Q594 637 587 639T580 648Q580 650 582 660Q586 677 588 679T604 682Q609 682 646 681T740 680Q802 680 835 681T871 682Q888 682 888 672Q888 645 876 638H874Q872 638 869 638T862 638T853 637T844 637Q805 636 794 634T776 623Q773 618 704 340T634 58Q634 51 638 51Q646 48 692 46H723Q729 38 729 37T726 19Q722 6 716 0H701Q664 2 567 2Q533 2 504 2T458 2T437 1Q420 1 420 10Q420 15 423 24Q428 43 433 45Q437 46 448 46H454Q481 46 514 49Q520 50 522 50T528 55T534 64T540 82T547 110T558 153Q565 181 569 198Q602 330 602 331T457 332H312L279 197Q245 63 245 58Q245 51 253 49T303 46H334Q340 38 340 37T337 19Q333 6 327 0H312Q275 2 178 2Q144 2 115 2T69 2T48 1Q31 1 31 10Q31 12 34 24Q39 43 44 45Q48 46 59 46H65Q92 46 125 49Q139 52 144 61Q147 65 216 339T285 628Q285 635 228 637Z"></path></g><g data-mml-node="mo" transform="translate(2442.8,0)"><path data-c="2208" d="M84 250Q84 372 166 450T360 539Q361 539 377 539T419 540T469 540H568Q583 532 583 520Q583 511 570 501L466 500Q355 499 329 494Q280 482 242 458T183 409T147 354T129 306T124 272V270H568Q583 262 583 250T568 230H124V228Q124 207 134 177T167 112T231 48T328 7Q355 1 466 0H570Q583 -10 583 -20Q583 -32 568 -40H471Q464 -40 446 -40T417 -41Q262 -41 172 45Q84 127 84 250Z"></path></g><g data-mml-node="mo" transform="translate(3387.6,0)"><path data-c="5B" d="M118 -250V750H255V710H158V-210H255V-250H118Z"></path></g><g data-mml-node="mn" transform="translate(3665.6,0)"><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path></g><g data-mml-node="mo" transform="translate(4165.6,0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="mi" transform="translate(4610.2,0)"><path data-c="1D459" d="M117 59Q117 26 142 26Q179 26 205 131Q211 151 215 152Q217 153 225 153H229Q238 153 241 153T246 151T248 144Q247 138 245 128T234 90T214 43T183 6T137 -11Q101 -11 70 11T38 85Q38 97 39 102L104 360Q167 615 167 623Q167 626 166 628T162 632T157 634T149 635T141 636T132 637T122 637Q112 637 109 637T101 638T95 641T94 647Q94 649 96 661Q101 680 107 682T179 688Q194 689 213 690T243 693T254 694Q266 694 266 686Q266 675 193 386T118 83Q118 81 118 75T117 65V59Z"></path></g><g data-mml-node="mi" transform="translate(4908.2,0)"><path data-c="1D45C" d="M201 -11Q126 -11 80 38T34 156Q34 221 64 279T146 380Q222 441 301 441Q333 441 341 440Q354 437 367 433T402 417T438 387T464 338T476 268Q476 161 390 75T201 -11ZM121 120Q121 70 147 48T206 26Q250 26 289 58T351 142Q360 163 374 216T388 308Q388 352 370 375Q346 405 306 405Q243 405 195 347Q158 303 140 230T121 120Z"></path></g><g data-mml-node="mi" transform="translate(5393.2,0)"><path data-c="1D454" d="M311 43Q296 30 267 15T206 0Q143 0 105 45T66 160Q66 265 143 353T314 442Q361 442 401 394L404 398Q406 401 409 404T418 412T431 419T447 422Q461 422 470 413T480 394Q480 379 423 152T363 -80Q345 -134 286 -169T151 -205Q10 -205 10 -137Q10 -111 28 -91T74 -71Q89 -71 102 -80T116 -111Q116 -121 114 -130T107 -144T99 -154T92 -162L90 -164H91Q101 -167 151 -167Q189 -167 211 -155Q234 -144 254 -122T282 -75Q288 -56 298 -13Q311 35 311 43ZM384 328L380 339Q377 350 375 354T369 368T359 382T346 393T328 402T306 405Q262 405 221 352Q191 313 171 233T151 117Q151 38 213 38Q269 38 323 108L331 118L384 328Z"></path></g><g data-mml-node="mo" transform="translate(5870.2,0) translate(0 -0.5)"><path data-c="7C" d="M139 -249H137Q125 -249 119 -235V251L120 737Q130 750 139 750Q152 750 159 735V-235Q151 -249 141 -249H139Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(6148.2,0)"><g data-mml-node="mi"><path data-c="56" d="M25 633Q25 647 47 665T100 683Q291 683 291 306Q291 264 288 213T282 132L279 102Q281 102 308 126T378 191T464 279T545 381T596 479Q600 490 600 502Q600 527 581 550T523 577Q505 577 505 601Q505 622 516 647T542 681Q546 683 558 683Q605 679 631 645T658 559Q658 423 487 215Q409 126 308 37T190 -52Q177 -52 177 -28Q177 -26 183 15T196 127T203 270Q203 356 192 421T165 523T126 583T83 613T41 620Q25 620 25 633Z"></path></g></g><g data-mml-node="mo" transform="translate(6806.2,0) translate(0 -0.5)"><path data-c="7C" d="M139 -249H137Q125 -249 119 -235V251L120 737Q130 750 139 750Q152 750 159 735V-235Q151 -249 141 -249H139Z"></path></g><g data-mml-node="mo" transform="translate(7084.2,0)"><path data-c="5D" d="M22 710V750H159V-250H22V-210H119V710H22Z"></path></g><g data-mml-node="mo" transform="translate(7362.2,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g></g></g></svg></mjx-container> 的token加水印（<mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.023ex;" xmlns="http://www.w3.org/2000/svg" width="1.005ex" height="1.645ex" role="img" focusable="false" viewBox="0 -717 444 727"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D6FF" d="M195 609Q195 656 227 686T302 717Q319 716 351 709T407 697T433 690Q451 682 451 662Q451 644 438 628T403 612Q382 612 348 641T288 671T249 657T235 628Q235 584 334 463Q401 379 401 292Q401 169 340 80T205 -10H198Q127 -10 83 36T36 153Q36 286 151 382Q191 413 252 434Q252 435 245 449T230 481T214 521T201 566T195 609ZM112 130Q112 83 136 55T204 27Q233 27 256 51T291 111T309 178T316 232Q316 267 309 298T295 344T269 400L259 396Q215 381 183 342T137 256T118 179T112 130Z"></path></g></g></g></svg></mjx-container>）。也就是说如果下一个token的结果极为确定（例如上面举的True和False），就不在此上加水印。</p>
+<p>算哈希的方法，Kirchenbauer等人（2023年）中使用的方法是token id×hash key，这里估计差不多。</p>
+<p>然后是检测的算法：</p>
+<p><img src="https://p.ipic.vip/b99u2c.png" alt="image-20230820232351493" style="zoom:50%;"></p>
+<p>其中算式分别为：</p>
+<p><img src="https://p.ipic.vip/ii0qoz.png" alt="image-20230820232707519" style="zoom:50%;"></p>
+<p><img src="https://p.ipic.vip/h89rnc.png" alt="image-20230820232719688" style="zoom:50%;"></p>
+<p>其中<mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.375ex;" xmlns="http://www.w3.org/2000/svg" width="2.049ex" height="1.375ex" role="img" focusable="false" viewBox="0 -442 905.6 607.6"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D460" d="M131 289Q131 321 147 354T203 415T300 442Q362 442 390 415T419 355Q419 323 402 308T364 292Q351 292 340 300T328 326Q328 342 337 354T354 372T367 378Q368 378 368 379Q368 382 361 388T336 399T297 405Q249 405 227 379T204 326Q204 301 223 291T278 274T330 259Q396 230 396 163Q396 135 385 107T352 51T289 7T195 -10Q118 -10 86 19T53 87Q53 126 74 143T118 160Q133 160 146 151T160 120Q160 94 142 76T111 58Q109 57 108 57T107 55Q108 52 115 47T146 34T201 27Q237 27 263 38T301 66T318 97T323 122Q323 150 302 164T254 181T195 196T148 231Q131 256 131 289Z"></path></g><g data-mml-node="mn" transform="translate(502,-150) scale(0.707)"><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path></g></g></g></g></svg></mjx-container>是一段已知的不是LLM生成的代码段。总的来说验证的过程就是拿<mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.375ex;" xmlns="http://www.w3.org/2000/svg" width="2.049ex" height="1.375ex" role="img" focusable="false" viewBox="0 -442 905.6 607.6"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D460" d="M131 289Q131 321 147 354T203 415T300 442Q362 442 390 415T419 355Q419 323 402 308T364 292Q351 292 340 300T328 326Q328 342 337 354T354 372T367 378Q368 378 368 379Q368 382 361 388T336 399T297 405Q249 405 227 379T204 326Q204 301 223 291T278 274T330 259Q396 230 396 163Q396 135 385 107T352 51T289 7T195 -10Q118 -10 86 19T53 87Q53 126 74 143T118 160Q133 160 146 151T160 120Q160 94 142 76T111 58Q109 57 108 57T107 55Q108 52 115 47T146 34T201 27Q237 27 263 38T301 66T318 97T323 122Q323 150 302 164T254 181T195 196T148 231Q131 256 131 289Z"></path></g><g data-mml-node="mn" transform="translate(502,-150) scale(0.707)"><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path></g></g></g></g></svg></mjx-container>重新输出一遍，然后看<mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="1.052ex" height="1.025ex" role="img" focusable="false" viewBox="0 -442 465 453"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D467" d="M347 338Q337 338 294 349T231 360Q211 360 197 356T174 346T162 335T155 324L153 320Q150 317 138 317Q117 317 117 325Q117 330 120 339Q133 378 163 406T229 440Q241 442 246 442Q271 442 291 425T329 392T367 375Q389 375 411 408T434 441Q435 442 449 442H462Q468 436 468 434Q468 430 463 420T449 399T432 377T418 358L411 349Q368 298 275 214T160 106L148 94L163 93Q185 93 227 82T290 71Q328 71 360 90T402 140Q406 149 409 151T424 153Q443 153 443 143Q443 138 442 134Q425 72 376 31T278 -11Q252 -11 232 6T193 40T155 57Q111 57 76 -3Q70 -11 59 -11H54H41Q35 -5 35 -2Q35 13 93 84Q132 129 225 214T340 322Q352 338 347 338Z"></path></g></g></g></svg></mjx-container>有没有超过阈值。</p>
+<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><p>我们进行了一系列实验来评估我们的水印方法在应用于基础LLM时的不可察觉性和检测能力。我们使用LLaMA-13B（Touvron等人，2023）作为所有实验的基础LLM。对于代码生成测试平台，使用了两个数据集：HumanEval（Chen等人，2021）和MBPP（Austin等人，2021）。这两个任务都测试语言模型是否能够根据函数名和指令生成完整的函数代码。带有或不带有水印的LLM会生成一个代码，并且我们旨在将其与人工编写的代码区分开来。</p>
+<h3 id="Baselines"><a href="#Baselines" class="headerlink" title="Baselines"></a>Baselines</h3><p>我们将选择性水印方法与各种机器生成文本检测基线进行比较，这些基线分为基于检测和基于水印的方法。 基于检测的方法可以在不加水印的情况下检测到合成文本。 在四个用于比较机器生成代码检测性能的基线中，有三个是基于检测的，一个是基于水印的。 基于检测的基线识别LLM生成输出特征以确定候选文本源LM，而基于水印的则通过统计t测试来检测隐藏水印是否存在。</p>
+<h3 id="Metrics"><a href="#Metrics" class="headerlink" title="Metrics"></a>Metrics</h3><p><strong>生成代码的功能</strong> 为了评估代码生成，我们使用 pass@k（Chen等人，2021）通过为每个实例生成 n（&gt; k）个样本来进行评估。通过将水印代码的 pass@k 分数与基础 LM 生成的非水印代码的分数进行比较，我们可以评估水印方法的不可察觉性。请注意，我们无需评估基于检测的基线方法的不可察觉性，因为它们不会对代码进行水印处理；它们使用原始代码。</p>
+<p><strong>机器生成代码检测的性能</strong> 对于检测能力，我们计算AUROC（即ROC下面积）、TPR（真正例率）和FPR（假正例率）来衡量正确检测机器生成代码的性能。我们报告TPR得分在低于1%的FPR水平上，以最小化将人工编写的代码误分类为机器生成代码，这被认为是不可取的（即I型错误）。即希望确保在判定机器生成的代码时，不会超过1%的人工编写的代码被错误地分类为机器生成的。</p>
+<h3 id="Hyperparameters"><a href="#Hyperparameters" class="headerlink" title="Hyperparameters"></a>Hyperparameters</h3><p>我们主要遵循LLaMA中的超参数来生成源代码。在HumanEval中，我们生成<mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.186ex;" xmlns="http://www.w3.org/2000/svg" width="7.768ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 3433.6 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mo" transform="translate(877.8,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1933.6,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z" transform="translate(500,0)"></path><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z" transform="translate(1000,0)"></path></g></g></g></svg></mjx-container>个样本，但由于计算资源昂贵，在MBPP中只生成<mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.186ex;" xmlns="http://www.w3.org/2000/svg" width="7.768ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 3433.6 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mo" transform="translate(877.8,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1933.6,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z" transform="translate(500,0)"></path><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z" transform="translate(1000,0)"></path></g></g></g></svg></mjx-container>个样本。我们使用p=0.95和温度为0.8的top-p (Holtzman等人，2020)采样方法。当T5-3B用于Detect-GPT时，我们遵循DetectGPT的原始超参数，例如2个单词跨度和15％的掩码。然而，在利用SantaCoder时，我们通过仅屏蔽每次扰动中一行代码来模拟单行填充任务场景，这使得SantaCoder表现良好（Fried等人, 2023; Bavarian等人, 2022）。对于水印方法，我们将绿色列表大小参数<mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.489ex;" xmlns="http://www.w3.org/2000/svg" width="1.229ex" height="1.486ex" role="img" focusable="false" viewBox="0 -441 543 657"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D6FE" d="M31 249Q11 249 11 258Q11 275 26 304T66 365T129 418T206 441Q233 441 239 440Q287 429 318 386T371 255Q385 195 385 170Q385 166 386 166L398 193Q418 244 443 300T486 391T508 430Q510 431 524 431H537Q543 425 543 422Q543 418 522 378T463 251T391 71Q385 55 378 6T357 -100Q341 -165 330 -190T303 -216Q286 -216 286 -188Q286 -138 340 32L346 51L347 69Q348 79 348 100Q348 257 291 317Q251 355 196 355Q148 355 108 329T51 260Q49 251 47 251Q45 249 31 249Z"></path></g></g></g></svg></mjx-container>固定为0.25，并且<mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.186ex;" xmlns="http://www.w3.org/2000/svg" width="5.153ex" height="1.808ex" role="img" focusable="false" viewBox="0 -717 2277.6 799"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D6FF" d="M195 609Q195 656 227 686T302 717Q319 716 351 709T407 697T433 690Q451 682 451 662Q451 644 438 628T403 612Q382 612 348 641T288 671T249 657T235 628Q235 584 334 463Q401 379 401 292Q401 169 340 80T205 -10H198Q127 -10 83 36T36 153Q36 286 151 382Q191 413 252 434Q252 435 245 449T230 481T214 521T201 566T195 609ZM112 130Q112 83 136 55T204 27Q233 27 256 51T291 111T309 178T316 232Q316 267 309 298T295 344T269 400L259 396Q215 381 183 342T137 256T118 179T112 130Z"></path></g><g data-mml-node="mo" transform="translate(721.8,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1777.6,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g></svg></mjx-container>添加到绿色列表logits。</p>
+<h2 id="Results-and-Analysis"><a href="#Results-and-Analysis" class="headerlink" title="Results and Analysis"></a>Results and Analysis</h2><h3 id="Main-Results"><a href="#Main-Results" class="headerlink" title="Main Results"></a>Main Results</h3><p><img src="https://p.ipic.vip/k4igph.png" alt="image-20230821001639275" style="zoom:50%;"></p>
+<h3 id="Further-Analysis"><a href="#Further-Analysis" class="headerlink" title="Further Analysis"></a>Further Analysis</h3><p><strong>分析熵阈值的影响</strong> 图3展示了在我们的方法中校准熵阈值时，代码生成性能和检测能力如何变化。随着熵阈值的增加，watermarked token比例降低，因此代码生成性能趋于非水印基础模型。这表明我们的方法始终处于普通数字水印和非水印基础模型之间。另一方面，检测能力呈现出明显的曲线：随着熵阈值的增加，它达到局部最大值但最终下降。我们认为这一点是帕累托前沿点，代表了代码生成性能和检测能力之间的权衡。</p>
+<p><img src="https://p.ipic.vip/jmtgab.png" alt="image-20230821002231193" style="zoom:50%;"></p>
+<p><strong>分析良好的代码</strong> 为了看到当机器生成的代码和人工编写的代码表示相同功能时，它们有多难以区分，我们仅对可运行的代码对进行检测性能评估。在表2中，包括我们自己在内的基于水印技术的方法遭受了巨大的性能下降；就TPR而言，在香草水印和我们两种方法中，分别下降了71％、75％和73％。这些结果表明，在嵌入水印并且像人工编写一样运行良好的情况下生成代码比其他文本生成任务更具挑战性。另一方面，考虑示例集合规模较小，基于检测方法性能变化微不足道。</p>
+<p><img src="https://p.ipic.vip/bus07l.png" alt="image-20230821002548126" style="zoom: 50%;"></p>
+<p><strong>消融研究</strong> 我们进行了一项消融研究，以评估使用熵阈值的贡献。在图2中，我们可以清楚地看到随着熵阈值的增加，水印标记（绿色标记）的数量减少。这自然引出一个问题：实际上最重要的是水印部分比例的减少吗？为了回答这个问题，我们尝试了修改后的香草水印算法版本，并将水印比例从100％（香草）逐渐降低到0％（规范解决方案-无水印）。我们通过随机决定是否排除目标比例下每个令牌进行水印来做到这一点。在图4中，我们还绘制了SWEET在不同熵阈值下的pass@10结果（因为通过增加阈值，水印比例会下降）。 在这里，我们可以观察到随着减少加密比例，在60％左右有一个显着下降曲率和拐点处时vanilla watermarking pass@10呈现出凸形曲线。另一方面，我们的方法显示出(近乎)单调递增曲线。对于两种方法都存在明显峰值——当从20%上涨到0%时，这是一个显而易见的结果，因为对规范解决方案几乎没有进行任何修改。有趣的是，在SWEET中，当性能开始上升（约25%）时，熵阈值为0.9，并且在图3中显示它获得了最高AUROC。正如图所示，在此处检测AUROC开始下降。这也有一个简单明了的答案，因为要加密的令牌越少，则检测置信度变弱。因此，我们可以安全地得出结论：通过使用熵阈值-SWEET-我们能够找到pass@k和detection AUROC之间权衡的最佳点。</p>
+<p><img src="https://p.ipic.vip/3ii1ek.png" alt="image-20230821002950708" style="zoom:33%;"><img src="https://p.ipic.vip/pia0ce.png" alt="image-20230821003006657" style="zoom:40%;"></p>
+<h3 id="Case-Study-Breakdown-of-DetectGPT"><a href="#Case-Study-Breakdown-of-DetectGPT" class="headerlink" title="Case Study: Breakdown of DetectGPT"></a>Case Study: Breakdown of DetectGPT</h3><p>虽然DetectGPT在纯文本生成任务（如XSum、SQuAD或Wikipassage）中表现出了卓越的检测性能（Mitchell等人，2023年），但它在代码生成任务中表现最差。我们假设Detect-GPT的检测能力取决于底层LLM的性能。它在LLM的性能接近人类水平的任务中表现出色，而在代码生成任务中其性能显著较低，没有任何LLM达到人类水平的性能。</p>
+<h2 id="Limitations"><a href="#Limitations" class="headerlink" title="Limitations"></a>Limitations</h2><p>我们主要指出这项工作的局限性，并提出缓解它们的方法。我们特别要注意，这些限制并不是我们工作的“弱点”，因为它们不仅仅局限于我们提出的方法，而且也是该领域现状的一种限制。</p>
+<p>第一个问题涉及手动选择熵阈值的过程。改变此阈值会极大地改变代码和检测性能，因此它是一个非常重要的超参数，其取决于用于生成和基准数据集中使用骨干模型。然而，根据我们观察到的情况，在保持语料库平均熵附近时通常可以得到接近 Pareto 最优结果之间检测精度和 pass@k 的平衡点，表明存在优化可能。</p>
+<p>此外，在实验结果讨论中提到了，在检测时还需要源代码 LLM ，因此该方法只适用于完全白盒设置下（就像 DetectGPT 一样）。对于希望应用我们工作但计算负担较大用户来说可能会有困难。</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>在本文中，我们确定并强调了对代码LLM水印的需求，并首次进行了正式规范化。尽管大型语言模型编码能力迅速提高，但鼓励安全使用这些模型的必要措施尚未实施。我们的实验表明，现有的水印和检测技术无法在代码生成设置下正确运行。失败发生在两种模式下：1）代码不能被正确地加上水印（因此无法被检测），或者2）带有水印的代码无法正确执行（质量降低）。另一方面，我们提出的方法（SWEET）通过引入选择性熵阈值处理过滤与执行质量最不相关的标记，在某种程度上解决了这两种故障模式。确实，使用SWEET进行实验得到结果并没有完全恢复原始非水印性能；然而，我们认为这是朝着实现这个雄心勃勃目标迈出重要一步。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>正如作者在这篇文章中所说的，使用SWEET进行实验得到结果并没有完全恢复原始非水印性能；然而，我们认为这是朝着实现这个雄心勃勃目标迈出重要一步，明天就去看看OpenAI的PPT是怎么解决这个问题的。</p>
+
+
+<!--<a href="https://asparticguan.github.io/blog/Who%20Wrote%20this%20Code%20%20Watermarking%20for%20Code%20Generation.html#disqus_thread" class="article-comment-link">Comments</a>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = ''; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+-->
+<div style="display:none">
+<script src="http://s4.cnzz.com/stat.php?id=&web_id=" language="JavaScript"></script>script>
+</div>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+</body>
+</html>
